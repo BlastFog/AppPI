@@ -5,3 +5,6 @@
   - Sensor: Fingerabdruck zum Abrufen gespeicherter API keys
   - Data centricity: Server mit Daten
   - Special gestures: Swipe für Preset-swap
+
+# APIs
+https://free-apis.github.io/#/browse
