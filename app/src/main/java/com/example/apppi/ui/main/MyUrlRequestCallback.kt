@@ -24,9 +24,6 @@ class MyUrlRequestCallback : UrlRequest.Callback() {
 
     override fun onReadCompleted(request: UrlRequest?, info: UrlResponseInfo?, byteBuffer: ByteBuffer?) {
         Log.i(TAG, "onReadCompleted method called.")
-        if (byteBuffer != null) {
-            byteBuffer.clear()
-        }
         byteBuffer?.let {
             it.flip()
             val bytes = ByteArray(it.remaining())
@@ -42,13 +39,15 @@ class MyUrlRequestCallback : UrlRequest.Callback() {
     }
 
     override fun onFailed(request: UrlRequest?, info: UrlResponseInfo?, error: CronetException?) {
+        Log.e(TAG, "Request failed: ${error?.message}")
     }
 
     private fun parseJsonResponse(response: String) {
         try {
             val jsonObject = JSONObject(response)
-            val data = jsonObject.getString("key")
+            val data = jsonObject.getString("name")
             Log.i(TAG, "Extracted data: $data")
+            //Log.i(TAG, "Extracted data: $response")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to parse JSON response: ${e.message}")
         }
