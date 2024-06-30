@@ -23,6 +23,7 @@ import java.util.concurrent.Executors
 
 private const val TAG = "MyUrlRequestCallback"
 private const val BASEURL = "https://www.googleapis.com/youtube/v3/"
+private const val KEY = "123"
 
 class Fragment3 : Fragment() {
 // Youtube API Interaction Fragment (Auth Token)
@@ -56,7 +57,7 @@ class Fragment3 : Fragment() {
             //val channelName : String = "SB737"
             val channelName : String = input.text.toString()
 
-            val queries : Map<String, String> = mapOf("part" to "snippet", "q" to "@$channelName", "type" to "channel", "key" to "AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
+            val queries : Map<String, String> = mapOf("part" to "snippet", "q" to "@$channelName", "type" to "channel", "key" to "$KEY")
 
             val apiUrl = QueryStringBuilder.newInstance().buildQueryString(BASEURL+"search", queries)
 
@@ -92,7 +93,7 @@ class Fragment3 : Fragment() {
         Log.i(TAG,"ID: $channelID")
         val executor: Executor = Executors.newSingleThreadExecutor()
 
-        val queries : Map<String, String> = mapOf("part" to "statistics", "id" to "$channelID", "key" to "AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
+        val queries : Map<String, String> = mapOf("part" to "statistics", "id" to "$channelID", "key" to "$KEY")
         val apiUrl = QueryStringBuilder.newInstance().buildQueryString(BASEURL+"channels", queries)
 
         val requestBuilder = cronetEngine.newUrlRequestBuilder(
