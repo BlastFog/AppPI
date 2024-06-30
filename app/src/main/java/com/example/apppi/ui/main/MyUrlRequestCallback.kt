@@ -47,9 +47,9 @@ class MyUrlRequestCallback : UrlRequest.Callback() {
     private fun parseJsonResponse(response: String) {
         try {
             val jsonObject = JSONObject(response)
-            val data = jsonObject.getString("name")
+            //val data = jsonObject.getString("name")
             Log.i(TAG, "Extracted jsonObject: $jsonObject")
-            Log.i(TAG, "Extracted data: $data")
+            //Log.i(TAG, "Extracted data: $data")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to parse JSON response: ${e.message}")
         }

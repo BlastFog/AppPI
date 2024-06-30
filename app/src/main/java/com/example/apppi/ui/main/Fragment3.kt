@@ -46,7 +46,7 @@ class Fragment3 : Fragment() {
 
             val apiUrl = QueryStringBuilder.newInstance().buildQueryString("https://www.googleapis.com/youtube/v3/search", queries)
 
-            Log.i("testCalls101",apiUrl)
+            Log.i("MyUrlRequestCallback",apiUrl)
 
             val requestBuilder = cronetEngine.newUrlRequestBuilder(
                 apiUrl,
@@ -58,7 +58,7 @@ class Fragment3 : Fragment() {
 
 
             val request: UrlRequest = requestBuilder.build()
-            //request.start()
+            request.start()
         }
 
         return view
