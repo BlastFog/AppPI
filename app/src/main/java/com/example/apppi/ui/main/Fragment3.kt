@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -50,7 +51,10 @@ class Fragment3 : Fragment() {
             val cronetEngine: CronetEngine = myBuilder.build()
             val executor: Executor = Executors.newSingleThreadExecutor()
 
-            val channelName : String = "SB737"
+            val input : EditText = view.findViewById(R.id.ytChannelNameTextField)
+
+            //val channelName : String = "SB737"
+            val channelName : String = input.text.toString()
 
             val queries : Map<String, String> = mapOf("part" to "snippet", "q" to "@$channelName", "type" to "channel", "key" to "AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
 

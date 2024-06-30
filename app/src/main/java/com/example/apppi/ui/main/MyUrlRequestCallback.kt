@@ -28,13 +28,17 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
         Log.i(TAG, "onReadCompleted method called.")
         Log.i(TAG, "Header data: $info")            // status code etc.
 
-        byteBuffer?.let {
-            it.flip()
-            val bytes = ByteArray(it.remaining())
-            it.get(bytes)
-            responseBody.append(String(bytes, StandardCharsets.UTF_8))
+        if(info?.httpStatusCode!! >= 300){
+            // TODO: FrontEnd Toast for error
+        }else {
+            byteBuffer?.let {
+                it.flip()
+                val bytes = ByteArray(it.remaining())
+                it.get(bytes)
+                responseBody.append(String(bytes, StandardCharsets.UTF_8))
+            }
+            request?.read(ByteBuffer.allocateDirect(102400))
         }
-        request?.read(ByteBuffer.allocateDirect(102400))
     }
 
     override fun onSucceeded(request: UrlRequest?, info: UrlResponseInfo?) {
