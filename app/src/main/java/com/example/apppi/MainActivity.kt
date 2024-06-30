@@ -2,14 +2,18 @@ package com.example.apppi
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.example.apppi.ui.main.MainFragment
 import com.google.android.gms.net.CronetProviderInstaller
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var viewPager: ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,7 +32,15 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, MainFragment.newInstance())
                 .commitNow()
         }
+        viewPager = findViewById(R.id.viewPager)
+        viewPager.adapter = ViewPagerAdapter(this)
+        viewPager.visibility = View.GONE
+    }
 
-
+    fun navigateToSecondFragment() {
+        viewPager.visibility = View.VISIBLE
+        supportFragmentManager.beginTransaction()
+            .remove(supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
+            .commitNow()
     }
 }
