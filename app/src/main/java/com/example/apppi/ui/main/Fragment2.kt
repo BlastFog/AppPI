@@ -38,11 +38,15 @@ class Fragment2 : Fragment() {
         val apiUrl = "https://emojihub.yurace.pro/api/random"
 
 
+
         val requestBuilder = cronetEngine.newUrlRequestBuilder(
             apiUrl,
             MyUrlRequestCallback(),
             executor
         )
+
+        requestBuilder.addHeader("Content-Type","application/json")
+
         val request: UrlRequest = requestBuilder.build()
 
         request.start()
