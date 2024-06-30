@@ -9,7 +9,9 @@ import com.example.apppi.R
 
 
 class Fragment3 : Fragment() {
-
+// Youtube API Interaction Fragment (Auth Token)
+// Order: 1.  GET https://www.googleapis.com/youtube/v3/search params: part=snippet, q=@..., type=channel, key=...
+// 2. GET https://www.googleapis.com/youtube/v3/channels params: part=statistics, id=oldQuery[items[statistics]].subcriberCount, key=...
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
