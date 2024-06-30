@@ -7,13 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.apppi.QueryStringBuilder
 import com.example.apppi.R
 import org.chromium.net.CronetEngine
 import org.chromium.net.UrlRequest
+import org.json.JSONObject
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
+private const val TAG = "MyUrlRequestCallback"
 
 class Fragment3 : Fragment() {
 // Youtube API Interaction Fragment (Auth Token)
@@ -21,6 +27,8 @@ class Fragment3 : Fragment() {
 // 2. GET https://www.googleapis.com/youtube/v3/channels params: part=statistics, id=oldQuery[items[statistics]].subcriberCount, key=...
 
     private lateinit var ytFetchBut: Button
+    lateinit var jsonResponse : JSONObject
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,7 +50,7 @@ class Fragment3 : Fragment() {
 
             val channelName : String = "SB737"
 
-            val queries : Map<String, String> = mapOf("part" to "snippet", "q" to "@$channelName", "type" to "channel", "key" to "123")
+            val queries : Map<String, String> = mapOf("part" to "snippet", "q" to "@$channelName", "type" to "channel", "key" to "AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
 
             val apiUrl = QueryStringBuilder.newInstance().buildQueryString("https://www.googleapis.com/youtube/v3/search", queries)
 
@@ -50,7 +58,7 @@ class Fragment3 : Fragment() {
 
             val requestBuilder = cronetEngine.newUrlRequestBuilder(
                 apiUrl,
-                MyUrlRequestCallback(),
+                MyUrlRequestCallback("YT_id",this),
                 executor
             )
 
@@ -59,6 +67,24 @@ class Fragment3 : Fragment() {
 
             val request: UrlRequest = requestBuilder.build()
             request.start()
+
+            var myViewModel = ViewModelProvider(this).get(YTViewModel::class.java)
+            //myViewModel.setID("testID")
+
+
+            myViewModel.channelID.observe(context as LifecycleOwner, Observer { channelID ->
+                Log.i(TAG,"ID: $channelID")
+            })
+
+            /*
+            myViewModel.subs.observe(context as LifecycleOwner, Observer { subs ->
+                Log.i("MyUrlRequestCallback","Subs: $subs")
+            })*/
+
+        }
+
+        fun View.doSmth(){
+
         }
 
         return view
@@ -67,4 +93,5 @@ class Fragment3 : Fragment() {
     companion object {
         fun newInstance() = Fragment3()
     }
+
 }

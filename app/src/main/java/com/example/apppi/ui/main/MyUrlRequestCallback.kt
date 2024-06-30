@@ -1,6 +1,8 @@
 package com.example.apppi.ui.main
 
 import android.util.Log
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import org.chromium.net.CronetException
 import org.chromium.net.UrlRequest
 import org.chromium.net.UrlResponseInfo
@@ -10,7 +12,7 @@ import java.nio.charset.StandardCharsets
 
 private const val TAG = "MyUrlRequestCallback"
 
-class MyUrlRequestCallback : UrlRequest.Callback() {
+class MyUrlRequestCallback(private val apiName : String = "", private val fragmentReference : Fragment) : UrlRequest.Callback() {
     private val responseBody = StringBuilder()
     override fun onRedirectReceived(request: UrlRequest?, info: UrlResponseInfo?, newLocationUrl: String?) {
         Log.i(TAG, "onRedirectReceived method called.")
@@ -50,8 +52,33 @@ class MyUrlRequestCallback : UrlRequest.Callback() {
             //val data = jsonObject.getString("name")
             Log.i(TAG, "Extracted jsonObject: $jsonObject")
             //Log.i(TAG, "Extracted data: $data")
+
+            if(apiName.isEmpty()){
+                // TODO: Default Action
+            }else if(apiName=="YT_id"){
+                try {
+                    var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
+
+                    val channelID = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("id") as JSONObject).get("channelId")
+
+                    viewModel.setID("$channelID")
+
+                }catch (e : Exception){
+                    Log.e(TAG,"$e.message")
+                }
+            }else if(apiName == "YT_stats"){
+                var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
+                viewModel.setSubs(123)
+            }else if(apiName == "RandEmoji"){
+                Log.i(TAG,"TESTTTTTTTTT, $fragmentReference")
+            }
+
         } catch (e: Exception) {
             Log.e(TAG, "Failed to parse JSON response: ${e.message}")
         }
+    }
+
+    private fun handleYTJson(){
+
     }
 }

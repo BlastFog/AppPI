@@ -41,11 +41,13 @@ class Fragment2 : Fragment() {
 
         val requestBuilder = cronetEngine.newUrlRequestBuilder(
             apiUrl,
-            MyUrlRequestCallback(),
+            MyUrlRequestCallback("RandEmoji",this),
             executor
         )
 
         requestBuilder.addHeader("Content-Type","application/json")
+
+        Log.i("MyUrlRequestCallback","FIRST CALL")
 
         val request: UrlRequest = requestBuilder.build()
 
