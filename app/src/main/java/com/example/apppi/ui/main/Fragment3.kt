@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 private const val TAG = "MyUrlRequestCallback"
+private const val BASEURL = "https://www.googleapis.com/youtube/v3/"
 
 class Fragment3 : Fragment() {
 // Youtube API Interaction Fragment (Auth Token)
@@ -28,6 +30,7 @@ class Fragment3 : Fragment() {
 
     private lateinit var ytFetchBut: Button
     lateinit var jsonResponse : JSONObject
+    lateinit var subField : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,13 +49,12 @@ class Fragment3 : Fragment() {
             val myBuilder = CronetEngine.Builder(context)
             val cronetEngine: CronetEngine = myBuilder.build()
             val executor: Executor = Executors.newSingleThreadExecutor()
-            //val apiUrl = "https://www.googleapis.com/youtube/v3/search"
 
             val channelName : String = "SB737"
 
             val queries : Map<String, String> = mapOf("part" to "snippet", "q" to "@$channelName", "type" to "channel", "key" to "AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
 
-            val apiUrl = QueryStringBuilder.newInstance().buildQueryString("https://www.googleapis.com/youtube/v3/search", queries)
+            val apiUrl = QueryStringBuilder.newInstance().buildQueryString(BASEURL+"search", queries)
 
             Log.i("MyUrlRequestCallback",apiUrl)
 
@@ -69,25 +71,40 @@ class Fragment3 : Fragment() {
             request.start()
 
             var myViewModel = ViewModelProvider(this).get(YTViewModel::class.java)
-            //myViewModel.setID("testID")
 
+            subField = view.findViewById(R.id.textViewYTData)
 
-            myViewModel.channelID.observe(context as LifecycleOwner, Observer { channelID ->
-                Log.i(TAG,"ID: $channelID")
+            myViewModel.channelID.observe(context as LifecycleOwner, Observer {
+                channelID -> foundID(channelID, cronetEngine, subField)
             })
 
-            /*
-            myViewModel.subs.observe(context as LifecycleOwner, Observer { subs ->
-                Log.i("MyUrlRequestCallback","Subs: $subs")
-            })*/
-
         }
 
-        fun View.doSmth(){
-
-        }
 
         return view
+    }
+
+    private fun foundID(channelID : String, cronetEngine : CronetEngine, subField : TextView) {
+        Log.i(TAG,"ID: $channelID")
+        val executor: Executor = Executors.newSingleThreadExecutor()
+
+        val queries : Map<String, String> = mapOf("part" to "statistics", "id" to "$channelID", "key" to "AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
+        val apiUrl = QueryStringBuilder.newInstance().buildQueryString(BASEURL+"channels", queries)
+
+        val requestBuilder = cronetEngine.newUrlRequestBuilder(
+            apiUrl,
+            MyUrlRequestCallback("YT_stats",this),
+            executor
+        )
+        requestBuilder.addHeader("Content-Type","application/json")
+        val request: UrlRequest = requestBuilder.build()
+        request.start()
+
+        var myViewModel = ViewModelProvider(this).get(YTViewModel::class.java)
+        myViewModel.subs.observe(context as LifecycleOwner, Observer { subs ->
+            Log.i("MyUrlRequestCallback","Subs: $subs")
+            subField.text = subs.toString()
+        })
     }
 
     companion object {

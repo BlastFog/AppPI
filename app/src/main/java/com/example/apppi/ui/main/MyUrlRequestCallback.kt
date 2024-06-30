@@ -68,7 +68,9 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
                 }
             }else if(apiName == "YT_stats"){
                 var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
-                viewModel.setSubs(123)
+                val channelSubs = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("subscriberCount") as String
+                viewModel.setSubs(channelSubs.toInt())
+
             }else if(apiName == "RandEmoji"){
                 Log.i(TAG,"TESTTTTTTTTT, $fragmentReference")
             }
@@ -78,7 +80,4 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
         }
     }
 
-    private fun handleYTJson(){
-
-    }
 }
