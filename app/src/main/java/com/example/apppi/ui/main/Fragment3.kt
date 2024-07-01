@@ -24,7 +24,7 @@ import java.util.concurrent.Executors
 
 private const val TAG = "MyUrlRequestCallback"
 private const val BASEURL = "https://www.googleapis.com/youtube/v3/"
-private const val KEY = "AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4"
+private const val KEY = "123"
 
 class Fragment3 : Fragment() {
 // Youtube API Interaction Fragment (Auth Token)
@@ -62,9 +62,7 @@ class Fragment3 : Fragment() {
             myViewModel.channelID.observe(context as LifecycleOwner, Observer {
                 channelID -> foundID(channelID, cronetEngine, subField)
             })
-
         }
-
 
         return view
     }
