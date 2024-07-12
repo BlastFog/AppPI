@@ -83,5 +83,4 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
             Log.e(TAG, "Failed to parse JSON response: ${e.message}")
         }
     }
-
 }
