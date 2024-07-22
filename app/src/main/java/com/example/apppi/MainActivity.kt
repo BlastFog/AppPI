@@ -10,10 +10,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.apppi.ui.main.MainFragment
 import com.google.android.gms.net.CronetProviderInstaller
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
+    private lateinit var fabPlus: FloatingActionButton
+    private lateinit var fabInfo: FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,6 +38,12 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.viewPager)
         viewPager.adapter = ViewPagerAdapter(this)
         viewPager.visibility = View.GONE
+
+        fabPlus = findViewById(R.id.fabPlus)
+        fabPlus.visibility = View.GONE
+
+        fabInfo = findViewById(R.id.fabInfo)
+        fabInfo.visibility = View.GONE
     }
 
     fun navigateToSecondFragment() {

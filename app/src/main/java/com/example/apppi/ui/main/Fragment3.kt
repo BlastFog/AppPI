@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -34,6 +35,7 @@ class Fragment3 : Fragment() {
     private lateinit var ytFetchBut: Button
     lateinit var jsonResponse : JSONObject
     lateinit var subField : TextView
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,10 @@ class Fragment3 : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_3, container, false)
+
+        toolbar = view.findViewById(R.id.toolbar3)
+        toolbar.title = "Youtube API"
+
 
         ytFetchBut = view.findViewById(R.id.ytFetch)
         ytFetchBut.setOnClickListener{

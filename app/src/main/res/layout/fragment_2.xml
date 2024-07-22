@@ -5,9 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.Fragment2">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="i am the first fragment" />
+        android:orientation="vertical">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/darker_gray"
+            android:theme="?attr/actionBarTheme" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="I am the first fragment"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="18sp"/>
+    </LinearLayout>
 </FrameLayout>
