@@ -2,6 +2,7 @@ package com.example.apppi
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -51,5 +52,9 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .remove(supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
             .commitNow()
+    }
+
+    fun openFragmentBuilder(view : View){
+        Log.v("test123","OPEN")
     }
 }
