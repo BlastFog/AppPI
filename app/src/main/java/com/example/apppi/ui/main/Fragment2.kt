@@ -20,16 +20,7 @@ import org.chromium.net.UrlRequest
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Fragment2.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Fragment2 : Fragment() {
 
 
@@ -37,16 +28,6 @@ class Fragment2 : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        // FAB visibility
-        val activity = activity as? MainActivity
-        if (activity != null) {
-            activity.findViewById<FloatingActionButton>(R.id.fabPlus).visibility = View.VISIBLE
-            activity.findViewById<FloatingActionButton>(R.id.fabInfo).visibility = View.VISIBLE
-        }
-
-
 
         Log.i("test123", "Start")
 

@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.apppi.ui.main.MainFragment
+import com.example.apppi.ui.main.PresetCreatorFragment
 import com.google.android.gms.net.CronetProviderInstaller
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -49,6 +50,10 @@ class MainActivity : AppCompatActivity() {
 
     fun navigateToSecondFragment() {
         viewPager.visibility = View.VISIBLE
+
+        fabPlus.visibility = View.VISIBLE
+        fabInfo.visibility = View.VISIBLE
+
         supportFragmentManager.beginTransaction()
             .remove(supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
             .commitNow()
@@ -56,5 +61,14 @@ class MainActivity : AppCompatActivity() {
 
     fun openFragmentBuilder(view : View){
         Log.v("test123","OPEN")
+        viewPager.visibility = View.INVISIBLE
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, PresetCreatorFragment())
+            .addToBackStack(null)
+            .commit()
+
+        fabPlus.visibility = View.GONE
+        fabInfo.visibility = View.GONE
     }
 }
