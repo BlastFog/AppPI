@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.apppi.ui.main.MainFragment
 import com.example.apppi.ui.main.PresetCreatorFragment
@@ -53,6 +54,25 @@ class MainActivity : AppCompatActivity() {
 
         fabPlus.visibility = View.VISIBLE
         fabInfo.visibility = View.VISIBLE
+
+        supportFragmentManager.beginTransaction()
+            .remove(supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
+            .commitNow()
+    }
+
+    fun navigateBackAndAddFragment(frag : Fragment){
+        // adds new fragment to viewPager
+        val newFrag = ViewPagerAdapter(this)
+        newFrag.addFragment(frag)
+
+        viewPager.adapter = newFrag
+
+        viewPager.visibility = View.VISIBLE
+
+        fabPlus.visibility = View.VISIBLE
+        fabInfo.visibility = View.VISIBLE
+
+
 
         supportFragmentManager.beginTransaction()
             .remove(supportFragmentManager.findFragmentById(R.id.fragment_container)!!)

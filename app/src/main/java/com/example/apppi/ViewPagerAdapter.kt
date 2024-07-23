@@ -8,7 +8,7 @@ import com.example.apppi.ui.main.Fragment3
 import com.example.apppi.ui.main.Fragment4
 
 class ViewPagerAdapter (activity: FragmentActivity) : FragmentStateAdapter(activity) {
-    private val fragments = listOf(
+    private val fragments = mutableListOf(
         Fragment2(),
         Fragment3(),
         Fragment4()
@@ -16,4 +16,9 @@ class ViewPagerAdapter (activity: FragmentActivity) : FragmentStateAdapter(activ
 
     override fun getItemCount(): Int = fragments.size
     override fun createFragment(position: Int): Fragment = fragments[position]
+
+    fun addFragment(frag : Fragment){
+        fragments.add(frag)
+    }
+
 }

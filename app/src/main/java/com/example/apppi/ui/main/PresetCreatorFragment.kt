@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.example.apppi.MainActivity
 import com.example.apppi.R
-
+import com.example.apppi.ViewPagerAdapter
 
 
 class PresetCreatorFragment : Fragment() {
@@ -28,7 +28,7 @@ class PresetCreatorFragment : Fragment() {
 
         createBut = view.findViewById(R.id.presetCreateBut)
         createBut.setOnClickListener{
-            (activity as MainActivity).navigateToSecondFragment()
+            (activity as MainActivity).navigateBackAndAddFragment(Fragment3.newInstance())
         }
 
         return view
