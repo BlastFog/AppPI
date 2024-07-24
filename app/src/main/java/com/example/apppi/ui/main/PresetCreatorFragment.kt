@@ -28,7 +28,7 @@ class PresetCreatorFragment : Fragment() {
 
         createBut = view.findViewById(R.id.presetCreateBut)
         createBut.setOnClickListener{
-            (activity as MainActivity).navigateBackAndAddFragment(Fragment3.newInstance())
+            (activity as MainActivity).navigateBackAndAddFragment(CustomFragment.newInstance("XYZ","",true,true,""))
         }
 
         return view

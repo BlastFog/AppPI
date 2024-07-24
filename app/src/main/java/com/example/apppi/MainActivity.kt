@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var fabPlus: FloatingActionButton
     private lateinit var fabInfo: FloatingActionButton
+    private lateinit var viewPagerAdapter : ViewPagerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -38,8 +40,11 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, MainFragment.newInstance())
                 .commitNow()
         }
+
+        viewPagerAdapter = ViewPagerAdapter(this)
+
         viewPager = findViewById(R.id.viewPager)
-        viewPager.adapter = ViewPagerAdapter(this)
+        viewPager.adapter = viewPagerAdapter
         viewPager.visibility = View.GONE
 
         fabPlus = findViewById(R.id.fabPlus)
@@ -62,10 +67,9 @@ class MainActivity : AppCompatActivity() {
 
     fun navigateBackAndAddFragment(frag : Fragment){
         // adds new fragment to viewPager
-        val newFrag = ViewPagerAdapter(this)
-        newFrag.addFragment(frag)
+        viewPagerAdapter.addFragment(frag)
 
-        viewPager.adapter = newFrag
+        viewPager.adapter = viewPagerAdapter
 
         viewPager.visibility = View.VISIBLE
 
