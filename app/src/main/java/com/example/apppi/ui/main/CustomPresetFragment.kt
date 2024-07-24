@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import com.example.apppi.R
 
 
-class CustomFragment() : Fragment() {
+class CustomPresetFragment() : Fragment() {
 
     private lateinit var fragName : String
     private lateinit var url : String
@@ -51,8 +51,8 @@ class CustomFragment() : Fragment() {
         private const val ARG_PARAM4 = "key"
         private const val ARG_PARAM5 = "nested"
 
-        fun newInstance(name : String, url : String, raw : Boolean, key : Boolean, nested : String) : CustomFragment{
-            val fragment = CustomFragment()
+        fun newInstance(name : String, url : String, raw : Boolean, key : Boolean, nested : String) : CustomPresetFragment{
+            val fragment = CustomPresetFragment()
             val args = Bundle()
             args.putString(ARG_PARAM1, name)
             args.putString(ARG_PARAM2, url)

@@ -11,7 +11,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import com.example.apppi.MainActivity
 import com.example.apppi.R
-import com.example.apppi.ViewPagerAdapter
 
 
 class PresetCreatorFragment : Fragment() {
@@ -44,7 +43,7 @@ class PresetCreatorFragment : Fragment() {
 
             Log.v("debugFields", rawField.isChecked.toString())
 
-            (activity as MainActivity).navigateBackAndAddFragment(CustomFragment.newInstance(nameField.text.toString(),urlField.text.toString(),rawField.isChecked,keyField.isChecked,nestedField.text.toString()))
+            (activity as MainActivity).navigateBackAndAddFragment(CustomPresetFragment.newInstance(nameField.text.toString(),urlField.text.toString(),rawField.isChecked,keyField.isChecked,nestedField.text.toString()))
         }
 
         return view
