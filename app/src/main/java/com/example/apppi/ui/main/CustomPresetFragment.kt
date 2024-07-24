@@ -1,6 +1,7 @@
 package com.example.apppi.ui.main
 
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,9 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.apppi.CronetRequestBuilder
 
 import com.example.apppi.R
@@ -24,6 +28,7 @@ class CustomPresetFragment() : Fragment() {
     private var raw : Boolean = false
     private var key : Boolean = false
     private lateinit var nested : String
+    lateinit var resultField : EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +79,7 @@ class CustomPresetFragment() : Fragment() {
             checkKeyValuePair(R.id.customKey5, R.id.customValue5, view, queries)
             if(key){
                 // TODO: get Key from dropdown and keyStorage
-                queries.put("key","")
+                queries.put("key","AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
             }
 
             val queriesUnmutable : Map<String, String> = queries
@@ -87,12 +92,21 @@ class CustomPresetFragment() : Fragment() {
             if(raw)
                 CronetRequestBuilder.newInstance().buildRequest(cronetEngine,url,queries,"customRawCall",this)
 
+
+            var myViewModel = ViewModelProvider(this).get(CustomPresetViewModel::class.java)
+            resultField = view.findViewById(R.id.customResult)
+
+            myViewModel.jsonObject.observe(context as LifecycleOwner, Observer {
+                    jsonObj -> resultField.setText(jsonObj)
+            })
+
         }
 
-
-
-
         return view
+    }
+
+    fun observedChange(jsonObj : String, cronetEngine : CronetEngine, resultField : EditText){
+
     }
 
     fun checkKeyValuePair(cKey : Int, cValue : Int, view : View, queries : MutableMap<String, String>){
