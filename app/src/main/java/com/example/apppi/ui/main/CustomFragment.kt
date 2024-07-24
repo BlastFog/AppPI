@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar
 import com.example.apppi.R
 
 
-
 class CustomFragment() : Fragment() {
 
     private lateinit var fragName : String
@@ -40,7 +39,7 @@ class CustomFragment() : Fragment() {
         val view = inflater.inflate(R.layout.fragment_custom, container, false)
 
         val toolbar = view.findViewById<Toolbar>(R.id.customToolbar)
-        toolbar.title = fragName
+        toolbar.title = fragName.plus(" API")
 
         return view
     }
