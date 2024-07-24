@@ -1,13 +1,20 @@
 package com.example.apppi.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import com.example.apppi.CronetRequestBuilder
 
 import com.example.apppi.R
+import org.chromium.net.CronetEngine
 
 
 class CustomPresetFragment() : Fragment() {
@@ -41,7 +48,59 @@ class CustomPresetFragment() : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.customToolbar)
         toolbar.title = fragName.plus(" API")
 
+        val urlField = view.findViewById<TextView>(R.id.url)
+        urlField.text = url
+
+        val dropDown = view.findViewById<Spinner>(R.id.spinner)
+        if(key) {
+            1
+            // TODO: Key Implementation
+        }else
+            dropDown.visibility = View.INVISIBLE
+
+
+        val fetchBut = view.findViewById<Button>(R.id.customFetchBut)
+        fetchBut.setOnClickListener{
+
+            val myBuilder = CronetEngine.Builder(context)
+            val cronetEngine: CronetEngine = myBuilder.build()
+
+            val queries : MutableMap<String, String> = mutableMapOf()
+
+            checkKeyValuePair(R.id.customKey1, R.id.customValue1, view, queries)
+            checkKeyValuePair(R.id.customKey2, R.id.customValue2, view, queries)
+            checkKeyValuePair(R.id.customKey3, R.id.customValue3, view, queries)
+            checkKeyValuePair(R.id.customKey4, R.id.customValue4, view, queries)
+            checkKeyValuePair(R.id.customKey5, R.id.customValue5, view, queries)
+            if(key){
+                // TODO: get Key from dropdown and keyStorage
+                queries.put("key","")
+            }
+
+            val queriesUnmutable : Map<String, String> = queries
+            Log.v("debugFields", queriesUnmutable.toString())
+
+
+            //Example URL:  https://www.googleapis.com/youtube/v3/search
+            //     params: part=snippet, q=@MrBeast, type=channel
+
+            if(raw)
+                CronetRequestBuilder.newInstance().buildRequest(cronetEngine,url,queries,"customRawCall",this)
+
+        }
+
+
+
+
         return view
+    }
+
+    fun checkKeyValuePair(cKey : Int, cValue : Int, view : View, queries : MutableMap<String, String>){
+        val keyField = view.findViewById<EditText>(cKey)
+        if(keyField.text.isNotEmpty()){
+            val valueField = view.findViewById<EditText>(cValue)
+            queries.put(keyField.text.toString(), valueField.text.toString())
+        }
     }
 
     companion object {

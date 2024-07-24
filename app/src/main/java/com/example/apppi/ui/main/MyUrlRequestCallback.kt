@@ -77,6 +77,8 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
             }else if(apiName == "RandEmoji"){
                 Log.i(TAG,"TESTTTTTTTTT, $fragmentReference")
+            }else if(apiName == "customRawCall"){
+                
             }
 
         } catch (e: Exception) {
