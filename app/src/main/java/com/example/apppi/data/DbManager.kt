@@ -41,6 +41,12 @@ class DbManager(context: Context) {
         return apis
     }
 
+    fun getApiKey(apiName: String): String{
+        val cursor = db.query(DbHelper.TABLE_NAME, arrayOf(DbHelper.COLUMN_API_KEY), apiName, null, null, null, null)
+        cursor.moveToFirst()
+        return cursor.getString(cursor.run {getColumnIndex(DbHelper.COLUMN_API_NAME) })
+    }
+
     companion object {
         @Volatile private var instance: DbManager? = null
         fun getInstance(requireContext: Context): DbManager {
