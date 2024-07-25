@@ -41,4 +41,13 @@ class DbManager(context: Context) {
         return apis
     }
 
+    companion object {
+        @Volatile private var instance: DbManager? = null
+        fun getInstance(requireContext: Context): DbManager {
+            return instance ?: synchronized(this) {
+                instance ?: DbManager(requireContext).also { instance = it }
+            }
+        }
+    }
+
 }
