@@ -6,9 +6,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.apppi.ui.main.Fragment2
 import com.example.apppi.ui.main.Fragment3
 import com.example.apppi.ui.main.Fragment4
+import com.example.apppi.ui.main.KeyStorage
 
 class ViewPagerAdapter (activity: FragmentActivity) : FragmentStateAdapter(activity) {
     private val fragments = listOf(
+        KeyStorage(),
         Fragment2(),
         Fragment3(),
         Fragment4()
