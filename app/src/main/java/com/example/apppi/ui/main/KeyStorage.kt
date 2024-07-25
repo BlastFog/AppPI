@@ -1,6 +1,5 @@
 package com.example.apppi.ui.main
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -10,11 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TableRow
-import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AlertDialog
 import com.example.apppi.R
@@ -80,6 +77,7 @@ class KeyStorage : Fragment() {
                 }
             }
         }
+
         return view
     }
 
