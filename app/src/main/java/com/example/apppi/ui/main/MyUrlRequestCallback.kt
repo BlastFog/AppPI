@@ -77,6 +77,9 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
             }else if(apiName == "RandEmoji"){
                 Log.i(TAG,"TESTTTTTTTTT, $fragmentReference")
+            }else if(apiName == "customRawCall"){
+                var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
+                viewModel.setJsonObject(jsonObject.toString())
             }
 
         } catch (e: Exception) {

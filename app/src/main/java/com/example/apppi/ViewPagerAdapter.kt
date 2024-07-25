@@ -9,7 +9,8 @@ import com.example.apppi.ui.main.Fragment4
 import com.example.apppi.ui.main.KeyStorage
 
 class ViewPagerAdapter (activity: FragmentActivity) : FragmentStateAdapter(activity) {
-    private val fragments = listOf(
+
+    private val fragments = mutableListOf(
         KeyStorage(),
         Fragment2(),
         Fragment3(),
@@ -18,4 +19,9 @@ class ViewPagerAdapter (activity: FragmentActivity) : FragmentStateAdapter(activ
 
     override fun getItemCount(): Int = fragments.size
     override fun createFragment(position: Int): Fragment = fragments[position]
+
+    fun addFragment(frag : Fragment){
+        fragments.add(frag)
+    }
+
 }
