@@ -80,6 +80,8 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
             }else if(apiName == "customRawCall"){
                 var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
                 viewModel.setJsonObject(jsonObject.toString())
+
+                Log.v("asdasdasdasdas", "funzt!")
             }
 
         } catch (e: Exception) {

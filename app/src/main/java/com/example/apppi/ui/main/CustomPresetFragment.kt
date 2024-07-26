@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.apppi.CronetRequestBuilder
 
 import com.example.apppi.R
+import com.example.apppi.data.DbManager
 import org.chromium.net.CronetEngine
 
 
@@ -29,6 +31,7 @@ class CustomPresetFragment() : Fragment() {
     private var key : Boolean = false
     private lateinit var nested : String
     lateinit var resultField : EditText
+    lateinit var dropDown : Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +59,7 @@ class CustomPresetFragment() : Fragment() {
         val urlField = view.findViewById<TextView>(R.id.url)
         urlField.text = url
 
-        val dropDown = view.findViewById<Spinner>(R.id.spinner)
+        var dropDown = view.findViewById<Spinner>(R.id.spinner)
         if(key) {
             1
             // TODO: Key Implementation
@@ -65,8 +68,21 @@ class CustomPresetFragment() : Fragment() {
 
 
         val fetchBut = view.findViewById<Button>(R.id.customFetchBut)
-        fetchBut.setOnClickListener{
 
+
+        dropDown = view.findViewById(R.id.spinner)
+        val list : MutableList<String> = ArrayList()
+        for(el in DbManager.getInstance(requireContext()).getApis()) {
+            list.add(el)
+            //list.add(DbManager.getInstance(requireContext()).getApiKey(el))
+        }
+
+        dropDown.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, list)
+
+
+
+        fetchBut.setOnClickListener{
+            //Log.v("asdasdasdasdas", dropDown.selectedItem.toString())
             val myBuilder = CronetEngine.Builder(context)
             val cronetEngine: CronetEngine = myBuilder.build()
 
@@ -79,7 +95,9 @@ class CustomPresetFragment() : Fragment() {
             checkKeyValuePair(R.id.customKey5, R.id.customValue5, view, queries)
             if(key){
                 // TODO: get Key from dropdown and keyStorage
-                queries.put("key","AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
+                //queries.put("key","AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
+
+                queries.put("key", DbManager.getInstance(requireContext()).getApiKey(dropDown.selectedItem.toString()))
             }
 
             val queriesUnmutable : Map<String, String> = queries
