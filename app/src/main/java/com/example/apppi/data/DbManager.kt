@@ -4,6 +4,7 @@ import DbHelper
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 
 class DbManager(context: Context) {
     private val helper = DbHelper(context)
@@ -41,10 +42,23 @@ class DbManager(context: Context) {
         return apis
     }
 
+
     fun getApiKey(apiName: String): String{
-        val cursor = db.query(DbHelper.TABLE_NAME, arrayOf(DbHelper.COLUMN_API_KEY), apiName, null, null, null, null)
-        cursor.moveToFirst()
-        return cursor.getString(cursor.run {getColumnIndex(DbHelper.COLUMN_API_NAME) })
+        val selection = "${DbHelper.COLUMN_API_NAME} = ?"
+
+        val cursor = db.query(DbHelper.TABLE_NAME, arrayOf(DbHelper.COLUMN_API_KEY), selection, arrayOf(apiName), null, null, null)
+        //cursor.moveToFirst()
+
+        var apiKey: String = ""
+        if (cursor != null && cursor.moveToFirst()) {
+            val apiKeyIndex = cursor.getColumnIndex(DbHelper.COLUMN_API_KEY)
+            if (apiKeyIndex != -1) {
+                apiKey = cursor.getString(apiKeyIndex)
+            }
+            cursor.close()
+        }
+
+        return apiKey
     }
 
     companion object {
