@@ -1,5 +1,6 @@
 package com.example.apppi.ui.main
 
+import DbHelper
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,9 +12,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
 import com.example.apppi.MainActivity
 import com.example.apppi.R
+import com.example.apppi.data.DbManager
+import com.example.apppi.data.FragmentDataObject
 
 
 class PresetCreatorFragment : Fragment() {
@@ -66,7 +68,17 @@ class PresetCreatorFragment : Fragment() {
 
             Log.v("debugFields", rawField.isChecked.toString())
 
-            (activity as MainActivity).navigateBackAndAddFragment(CustomPresetFragment.newInstance(nameField.text.toString(),urlField.text.toString(),rawField.isChecked,keyField.isChecked,nestedField.text.toString()))
+            val fragment = FragmentDataObject.apply {
+                name = nameField.text.toString()
+                url = urlField.text.toString()
+                raw = rawField.isChecked
+                key = keyField.isChecked
+                nested = nestedField.text.toString()
+            }
+
+            DbManager.getInstance(requireContext()).addFragment(fragment)
+
+            (activity as MainActivity).navigateBackAndAddFragment(CustomPresetFragment.newInstance(fragment))
         }
 
         return view

@@ -6,11 +6,14 @@ import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.example.apppi.data.DbManager
 import com.example.apppi.ui.main.AboutFragment
+import com.example.apppi.ui.main.CustomPresetFragment
 import com.example.apppi.ui.main.MainFragment
 import com.example.apppi.ui.main.PresetCreatorFragment
 import com.google.android.gms.net.CronetProviderInstaller
@@ -60,6 +63,10 @@ class MainActivity : AppCompatActivity() {
 
         fabPlus.visibility = View.VISIBLE
         fabInfo.visibility = View.VISIBLE
+
+        for(fragment in DbManager.getInstance(this).getFragments()){
+            viewPagerAdapter.addFragment(CustomPresetFragment.newInstance(fragment))
+        }
 
         supportFragmentManager.beginTransaction()
             .remove(supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
