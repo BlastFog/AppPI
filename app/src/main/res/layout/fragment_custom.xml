@@ -257,6 +257,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:focusableInTouchMode="false"
+                    android:cursorVisible="false"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
                     android:scrollbars="vertical"
