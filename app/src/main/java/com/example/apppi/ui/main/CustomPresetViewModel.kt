@@ -9,7 +9,14 @@ class CustomPresetViewModel : ViewModel() {
     private val _jsonObject = MutableLiveData<String>()
     val jsonObject: LiveData<String> get() = _jsonObject
 
+    private val _jsonAttribute = MutableLiveData<String>()
+    val jsonAttribute: LiveData<String> get() = _jsonAttribute
+
     fun setJsonObject(jsObj : String){
         _jsonObject.postValue(jsObj)
     }
+    fun setJsonAttribute(jsObj : String){
+        _jsonAttribute.postValue(jsObj)
+    }
+
 }

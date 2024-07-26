@@ -106,17 +106,28 @@ class CustomPresetFragment() : Fragment() {
 
             //Example URL:  https://www.googleapis.com/youtube/v3/search
             //     params: part=snippet, q=@MrBeast, type=channel
-
-            if(raw)
-                CronetRequestBuilder.newInstance().buildRequest(cronetEngine,url,queries,"customRawCall",this)
-
-
             var myViewModel = ViewModelProvider(this).get(CustomPresetViewModel::class.java)
             resultField = view.findViewById(R.id.customResult)
 
-            myViewModel.jsonObject.observe(context as LifecycleOwner, Observer {
-                    jsonObj -> resultField.setText(jsonObj)
-            })
+
+            if(raw) {
+                Log.v("asdasdasdasdasdasd","RAWWWWW")
+                CronetRequestBuilder.newInstance().buildRequest(cronetEngine, url, queries, "customRawCall", this)
+                myViewModel.jsonObject.observe(context as LifecycleOwner, Observer {
+                        jsonObj -> resultField.setText(jsonObj)
+                })
+            }
+            else if(nested.isNotEmpty()){
+                Log.v("asdasdasdasdasdasd","NOT RAWWWWW")
+                CronetRequestBuilder.newInstance().buildRequest(cronetEngine,url,queries,"customNestedCall:".plus(nested),this)
+                myViewModel.jsonAttribute.observe(context as LifecycleOwner, Observer {
+                        jsonAtt -> resultField.setText(jsonAtt)
+                })
+            }
+
+
+
+
 
         }
 

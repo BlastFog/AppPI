@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import org.chromium.net.CronetException
 import org.chromium.net.UrlRequest
 import org.chromium.net.UrlResponseInfo
+import org.json.JSONArray
 import org.json.JSONObject
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
@@ -80,12 +81,33 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
             }else if(apiName == "customRawCall"){
                 var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
                 viewModel.setJsonObject(jsonObject.toString())
+            }else if(apiName.startsWith("customNestedCall")){
+                var nestedAttribute = apiName.substringAfter(':')
+                var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
+                viewModel.setJsonAttribute(extractJsonAttribute(jsonObject, nestedAttribute).toString())
 
-                Log.v("asdasdasdasdas", "funzt!")
+
+            }else{
+                Log.v("asdasdasdasdasdasd","CAUGHT YA")
             }
 
         } catch (e: Exception) {
             Log.e(TAG, "Failed to parse JSON response: ${e.message}")
         }
+    }
+
+
+    fun extractJsonAttribute(jsonObject: JSONObject, att : String) : Any?{
+        Log.v("asdasdasdasdasdasd","OBJ: $jsonObject")
+        val c = when(jsonObject){
+            is JSONObject -> jsonObject.get(att)
+            is JSONArray -> jsonObject.length()/*jsonObject.get(att.toInt())*//*extractJsonAttribute(jsonObject.getJSONArray(), att)*///{
+                //for(i in 0 until jsonObject.length())
+                //    extractJsonAttribute(jsonObject.getJSONObject(i),att)
+            //}
+            else -> throw Exception("Not Found")
+        }
+        Log.v("asdasdasdasdasdasd","attribute: $c")
+        return c
     }
 }

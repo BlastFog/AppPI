@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name" />
+                android:hint="Name" />
         </TableRow>
 
         <TableRow
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-                android:text="URL" />
+                android:hint="URL" />
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
@@ -78,7 +78,9 @@
                 android:id="@+id/checkRaw"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:clickable="false"
+                android:checked="true"/>
 
         </TableRow>
         <TableRow
@@ -108,7 +110,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".6"
-                android:text="Nested JSON attribute" />
+                android:text="Nested JSON object" />
 
             <EditText
                 android:id="@+id/presetNestedField"
