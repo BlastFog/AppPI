@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.example.apppi.ui.main.AboutFragment
 import com.example.apppi.ui.main.MainFragment
 import com.example.apppi.ui.main.PresetCreatorFragment
 import com.google.android.gms.net.CronetProviderInstaller
@@ -65,10 +66,7 @@ class MainActivity : AppCompatActivity() {
             .commitNow()
     }
 
-    fun navigateBackAndAddFragment(frag : Fragment){
-        // adds new fragment to viewPager
-        viewPagerAdapter.addFragment(frag)
-
+    fun navigateBack(){
         viewPager.adapter = viewPagerAdapter
 
         viewPager.visibility = View.VISIBLE
@@ -76,11 +74,15 @@ class MainActivity : AppCompatActivity() {
         fabPlus.visibility = View.VISIBLE
         fabInfo.visibility = View.VISIBLE
 
-
-
         supportFragmentManager.beginTransaction()
             .remove(supportFragmentManager.findFragmentById(R.id.fragment_container)!!)
             .commitNow()
+    }
+
+    fun navigateBackAndAddFragment(frag : Fragment){
+        // adds new fragment to viewPager
+        viewPagerAdapter.addFragment(frag)
+        navigateBack()
     }
 
     fun openFragmentBuilder(view : View){
@@ -89,6 +91,18 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, PresetCreatorFragment())
+            .addToBackStack(null)
+            .commit()
+
+        fabPlus.visibility = View.GONE
+        fabInfo.visibility = View.GONE
+    }
+
+    fun openAboutPage(view : View){
+        viewPager.visibility = View.INVISIBLE
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, AboutFragment())
             .addToBackStack(null)
             .commit()
 
