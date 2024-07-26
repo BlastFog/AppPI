@@ -61,6 +61,13 @@ class DbManager(context: Context) {
         return apiKey
     }
 
+    fun updateApiKey(apiName: String, newApiKey: String) {
+        val whereClause = "${DbHelper.COLUMN_API_NAME} = ?"
+        db.update(DbHelper.TABLE_NAME, ContentValues().apply {
+            this.put(DbHelper.COLUMN_API_KEY, newApiKey)
+        }, whereClause, arrayOf(apiName))
+    }
+
     companion object {
         @Volatile private var instance: DbManager? = null
         fun getInstance(requireContext: Context): DbManager {

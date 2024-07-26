@@ -1,6 +1,8 @@
 package com.example.apppi.ui.main
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -12,8 +14,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TableRow
+import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.addTextChangedListener
 import com.example.apppi.R
 import com.example.apppi.data.DbManager
 
@@ -86,8 +90,8 @@ class KeyStorage : Fragment() {
             layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
         }
 
-        val apiNameTextView = EditText(context).apply {
-            setText(apiName)
+        val apiNameTextView = TextView(context).apply {
+            text = apiName
             layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.4f)
         }
 
@@ -96,6 +100,10 @@ class KeyStorage : Fragment() {
             inputType = android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
             layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.6f)
             transformationMethod = PasswordTransformationMethod.getInstance()
+            addTextChangedListener {
+                DbManager.getInstance(requireContext()).updateApiKey(apiName, text.toString())
+            }
+
         }
 
         passwordFields.add(apiKeyTextView)
