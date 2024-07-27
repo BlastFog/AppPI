@@ -62,26 +62,34 @@ class PresetCreatorFragment : Fragment() {
         createBut = view.findViewById(R.id.presetCreateBut)
         backBut = view.findViewById(R.id.presetBackBut)
         createBut.setOnClickListener{
+
             nameField = view.findViewById(R.id.presetNameField)
             urlField = view.findViewById(R.id.presetUrlField)
-            //rawField = view.findViewById(R.id.checkRaw)
-            keyField = view.findViewById(R.id.checkKey)
-            //nestedField = view.findViewById(R.id.presetNestedField)
 
-            Log.v("debugFields", rawField.isChecked.toString())
+            if(nameField.text.isEmpty() || urlField.text.isEmpty()){
+                (activity as MainActivity).fieldEmptyToast()
+            }else {
+                keyField = view.findViewById(R.id.checkKey)
+                Log.v("debugFields", rawField.isChecked.toString())
 
-            val fragment = FragmentDataObject(
-                name = nameField.text.toString(),
-                url = urlField.text.toString(),
-                raw = rawField.isChecked,
-                key = keyField.isChecked,
-                nested = nestedField.text.toString(),
-                queries = ""
+                val fragment = FragmentDataObject(
+                    name = nameField.text.toString(),
+                    url = urlField.text.toString(),
+                    raw = rawField.isChecked,
+                    key = keyField.isChecked,
+                    nested = nestedField.text.toString(),
+                    queries = " "
                 )
 
-            DbManager.getInstance(requireContext()).addFragment(fragment)
+                DbManager.getInstance(requireContext()).addFragment(fragment)
 
-            (activity as MainActivity).navigateBackAndAddFragment(CustomPresetFragment.newInstance(fragment))
+                (activity as MainActivity).navigateBackAndAddFragment(
+                    CustomPresetFragment.newInstance(
+                        fragment
+                    )
+                )
+
+            }
         }
 
         backBut.setOnClickListener{

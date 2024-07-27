@@ -102,6 +102,10 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Removed ${name} Page", Toast.LENGTH_SHORT).show()
     }
 
+    fun fieldEmptyToast(){
+        Toast.makeText(this, "Please fill in the API name and URL", Toast.LENGTH_SHORT).show()
+    }
+
     fun openFragmentBuilder(view : View){
         Log.v("test123","OPEN")
         viewPager.visibility = View.INVISIBLE
