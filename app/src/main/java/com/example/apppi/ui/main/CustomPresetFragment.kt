@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -16,6 +17,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.apppi.CronetRequestBuilder
+import com.example.apppi.MainActivity
 
 import com.example.apppi.R
 import com.example.apppi.data.DbManager
@@ -31,7 +33,7 @@ class CustomPresetFragment() : Fragment() {
     private var key : Boolean = false
     private lateinit var nested : String
     lateinit var resultField : EditText
-    lateinit var dropDown : Spinner
+    lateinit var deleteBut : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +55,8 @@ class CustomPresetFragment() : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_custom, container, false)
 
-        val toolbar = view.findViewById<Toolbar>(R.id.customToolbar)
-        toolbar.title = fragName.plus(" API")
+        val titleBar = view.findViewById<TextView>(R.id.apiTitle)
+        titleBar.text = fragName.plus(" API")
 
         val urlField = view.findViewById<TextView>(R.id.url)
         urlField.text = url
@@ -78,7 +80,6 @@ class CustomPresetFragment() : Fragment() {
         }
 
         dropDown.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, list)
-
 
 
         fetchBut.setOnClickListener{
@@ -124,19 +125,26 @@ class CustomPresetFragment() : Fragment() {
                         jsonAtt -> resultField.setText(jsonAtt)
                 })
             }
+        }
 
+        deleteBut = view.findViewById(R.id.customDeleteBut)
 
+        deleteBut.setOnClickListener{
+            val fragment = FragmentDataObject(
+                name = fragName,
+                url = url,
+                raw = raw,
+                key = key,
+                nested = nested
+            )
+            DbManager.getInstance(requireContext()).removeFragment(fragment)
 
-
-
+            (activity as MainActivity).removeThisFragment(this)
         }
 
         return view
     }
 
-    fun observedChange(jsonObj : String, cronetEngine : CronetEngine, resultField : EditText){
-
-    }
 
     fun checkKeyValuePair(cKey : Int, cValue : Int, view : View, queries : MutableMap<String, String>){
         val keyField = view.findViewById<EditText>(cKey)

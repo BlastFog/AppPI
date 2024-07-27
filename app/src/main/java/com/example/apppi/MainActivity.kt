@@ -94,6 +94,11 @@ class MainActivity : AppCompatActivity() {
         navigateBack()
     }
 
+    fun removeThisFragment(frag : Fragment){
+        viewPagerAdapter.removeFragment(frag)
+        viewPager.adapter = viewPagerAdapter
+    }
+
     fun openFragmentBuilder(view : View){
         Log.v("test123","OPEN")
         viewPager.visibility = View.INVISIBLE

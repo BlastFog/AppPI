@@ -17,8 +17,38 @@
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
         android:theme="?attr/actionBarTheme"
-        />
+        >
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="right">
+
+
+                <TextView
+                    android:id="@+id/apiTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:autoSizeTextType="uniform"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:text="."
+                    android:gravity="center"/>
+
+                <ImageButton
+                    android:id="@+id/customDeleteBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/delete"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+
+                    />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

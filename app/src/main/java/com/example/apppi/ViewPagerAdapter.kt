@@ -24,4 +24,8 @@ class ViewPagerAdapter (activity: FragmentActivity) : FragmentStateAdapter(activ
         fragments.add(frag)
     }
 
+    fun removeFragment(frag : Fragment){
+        fragments.remove(frag)
+    }
+
 }

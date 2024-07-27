@@ -79,6 +79,23 @@ class DbManager(context: Context) {
         db.insert(DbHelper.FRAGMENT_TABLE_NAME, null, values)
     }
 
+    fun removeFragment(fragment: FragmentDataObject) {
+        val whereClause = "${DbHelper.COLUMN_FRAGMENT_NAME} = ? AND ${DbHelper.COLUMN_FRAGMENT_URL} = ? AND ${DbHelper.COLUMN_FRAGMENT_KEY} = ? AND ${DbHelper.COLUMN_FRAGMENT_RAW} = ? AND ${DbHelper.COLUMN_FRAGMENT_NESTED} = ?"
+        val whereArgs = arrayOf(
+            fragment.name,
+            fragment.url,
+            if (fragment.key) "1" else "0",
+            if (fragment.raw) "1" else "0",
+            //fragment.key,
+            //fragment.raw,
+            fragment.nested
+        )
+
+        db.delete(DbHelper.FRAGMENT_TABLE_NAME, whereClause, whereArgs)
+    }
+
+
+
     fun getFragments(): List<FragmentDataObject> {
         val cursor = db.query(DbHelper.FRAGMENT_TABLE_NAME, arrayOf(DbHelper.COLUMN_FRAGMENT_NAME, DbHelper.COLUMN_FRAGMENT_URL, DbHelper.COLUMN_FRAGMENT_KEY, DbHelper.COLUMN_FRAGMENT_RAW, DbHelper.COLUMN_FRAGMENT_NESTED), null, null, null, null, null)
         val fragments = mutableListOf<FragmentDataObject>()
