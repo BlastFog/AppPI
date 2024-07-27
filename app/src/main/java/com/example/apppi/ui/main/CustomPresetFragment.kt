@@ -1,7 +1,6 @@
 package com.example.apppi.ui.main
 
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +19,7 @@ import com.example.apppi.CronetRequestBuilder
 
 import com.example.apppi.R
 import com.example.apppi.data.DbManager
+import com.example.apppi.data.FragmentDataObject
 import org.chromium.net.CronetEngine
 
 
@@ -153,14 +153,14 @@ class CustomPresetFragment() : Fragment() {
         private const val ARG_PARAM4 = "key"
         private const val ARG_PARAM5 = "nested"
 
-        fun newInstance(name : String, url : String, raw : Boolean, key : Boolean, nested : String) : CustomPresetFragment{
+        fun newInstance(fragmentData: FragmentDataObject) : CustomPresetFragment{
             val fragment = CustomPresetFragment()
             val args = Bundle()
-            args.putString(ARG_PARAM1, name)
-            args.putString(ARG_PARAM2, url)
-            args.putBoolean(ARG_PARAM3, raw)
-            args.putBoolean(ARG_PARAM4, key)
-            args.putString(ARG_PARAM5, nested)
+            args.putString(ARG_PARAM1, fragmentData.name)
+            args.putString(ARG_PARAM2, fragmentData.url)
+            args.putBoolean(ARG_PARAM3, fragmentData.raw)
+            args.putBoolean(ARG_PARAM4, fragmentData.key)
+            args.putString(ARG_PARAM5, fragmentData.nested)
             fragment.arguments = args
 
             return fragment
