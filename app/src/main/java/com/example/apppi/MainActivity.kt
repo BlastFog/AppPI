@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.apppi.data.DbManager
+import com.example.apppi.data.FragmentDataObject
 import com.example.apppi.ui.main.AboutFragment
 import com.example.apppi.ui.main.CustomPresetFragment
 import com.example.apppi.ui.main.MainFragment
@@ -64,7 +65,8 @@ class MainActivity : AppCompatActivity() {
         fabPlus.visibility = View.VISIBLE
         fabInfo.visibility = View.VISIBLE
 
-        for(fragment in DbManager.getInstance(this).getFragments()){
+        val fragments = DbManager.getInstance(this).getFragments()
+        for(fragment in fragments){
             viewPagerAdapter.addFragment(CustomPresetFragment.newInstance(fragment))
         }
 

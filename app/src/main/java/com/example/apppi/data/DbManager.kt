@@ -4,6 +4,7 @@ import DbHelper
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 
 class DbManager(context: Context) {
     private val helper = DbHelper(context)
@@ -84,7 +85,7 @@ class DbManager(context: Context) {
 
         if(cursor != null && cursor.moveToFirst()) {
             do {
-                val fragment = FragmentDataObject
+                val fragment = FragmentDataObject()
                 fragment.name = cursor.getString(cursor.run {getColumnIndex(DbHelper.COLUMN_FRAGMENT_NAME)})
                 fragment.url = cursor.getString(cursor.run {getColumnIndex(DbHelper.COLUMN_FRAGMENT_URL)})
                 fragment.key = cursor.getInt(cursor.run {getColumnIndex(DbHelper.COLUMN_FRAGMENT_KEY)}) > 0
@@ -92,7 +93,6 @@ class DbManager(context: Context) {
                 fragment.nested = cursor.getString(cursor.run {getColumnIndex(DbHelper.COLUMN_FRAGMENT_NESTED)})
                 fragments.add(fragment)
             } while(cursor.moveToNext())
-
         }
 
         return fragments

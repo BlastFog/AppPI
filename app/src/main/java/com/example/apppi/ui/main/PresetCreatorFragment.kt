@@ -68,13 +68,13 @@ class PresetCreatorFragment : Fragment() {
 
             Log.v("debugFields", rawField.isChecked.toString())
 
-            val fragment = FragmentDataObject.apply {
-                name = nameField.text.toString()
-                url = urlField.text.toString()
-                raw = rawField.isChecked
-                key = keyField.isChecked
+            val fragment = FragmentDataObject(
+                name = nameField.text.toString(),
+                url = urlField.text.toString(),
+                raw = rawField.isChecked,
+                key = keyField.isChecked,
                 nested = nestedField.text.toString()
-            }
+                )
 
             DbManager.getInstance(requireContext()).addFragment(fragment)
 
