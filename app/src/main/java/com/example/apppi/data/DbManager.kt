@@ -4,7 +4,6 @@ import DbHelper
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.util.Log
 
 class DbManager(context: Context) {
     private val helper = DbHelper(context)
@@ -58,7 +57,6 @@ class DbManager(context: Context) {
         val selection = "${DbHelper.COLUMN_API_NAME} = ?"
 
         val cursor = db.query(DbHelper.KEY_TABLE_NAME, arrayOf(DbHelper.COLUMN_API_KEY), selection, arrayOf(apiName), null, null, null)
-        //cursor.moveToFirst()
 
         var apiKey: String = ""
         if (cursor != null && cursor.moveToFirst()) {
@@ -86,6 +84,7 @@ class DbManager(context: Context) {
             put(DbHelper.COLUMN_FRAGMENT_KEY, fragment.key)
             put(DbHelper.COLUMN_FRAGMENT_RAW, fragment.raw)
             put(DbHelper.COLUMN_FRAGMENT_NESTED, fragment.nested)
+            put(DbHelper.COLUMN_FRAGMENT_QUERY, "")
         }
         db.insert(DbHelper.FRAGMENT_TABLE_NAME, null, values)
     }
