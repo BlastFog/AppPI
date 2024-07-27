@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import com.example.apppi.MainActivity
@@ -25,13 +26,14 @@ class Fragment2 : Fragment() {
 
 
     private lateinit var toolbar: Toolbar
+    private lateinit var textV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         Log.i("test123", "Start")
 
-        val myBuilder = CronetEngine.Builder(context)
+        /*val myBuilder = CronetEngine.Builder(context)
         val cronetEngine: CronetEngine = myBuilder.build()
 
         val executor: Executor = Executors.newSingleThreadExecutor()
@@ -53,7 +55,7 @@ class Fragment2 : Fragment() {
 
         val request: UrlRequest = requestBuilder.build()
 
-        request.start()
+        request.start()*/
 
     }
 
@@ -66,7 +68,13 @@ class Fragment2 : Fragment() {
         val view = inflater.inflate(R.layout.fragment_2, container, false)
 
         toolbar = view.findViewById(R.id.toolbar2)
-        toolbar.title = "Fragment Title"
+        toolbar.title = "Introductory Fragment"
+
+        textV = view.findViewById(R.id.textView)
+        textV.text = "Hello and Welcome to AppPI.\n\nThis application is an Interface for simple API calls and provides some presets.\n" +
+                "It is possible to create custom pages by clicking the \"+\"-Button in the bottom right." +
+                "\nThe checkbox \"RAW JSON\" enables the raw print of the returned JSON Object.\n By simply providing a JSON Attribute, in the creator," +
+                " the software will return the respective value."
 
         return view
     }
