@@ -31,6 +31,17 @@ class DbManager(context: Context) {
         return keys
     }
 
+    fun addQueryToFragment(fragment: FragmentDataObject, query: String) {
+        val values = ContentValues().apply {
+            put(DbHelper.COLUMN_FRAGMENT_QUERY, query)
+        }
+
+        val whereClause = "${DbHelper.COLUMN_FRAGMENT_NAME} = ?"
+        val whereArgs = arrayOf(fragment.name)
+
+        db.update(DbHelper.FRAGMENT_TABLE_NAME, values, whereClause, whereArgs)
+    }
+
     fun getApis(): List<String>{
         val cursor = db.query(DbHelper.KEY_TABLE_NAME, arrayOf(DbHelper.COLUMN_API_NAME), null, null, null, null, null)
         val apis = mutableListOf<String>()
@@ -97,7 +108,7 @@ class DbManager(context: Context) {
 
 
     fun getFragments(): List<FragmentDataObject> {
-        val cursor = db.query(DbHelper.FRAGMENT_TABLE_NAME, arrayOf(DbHelper.COLUMN_FRAGMENT_NAME, DbHelper.COLUMN_FRAGMENT_URL, DbHelper.COLUMN_FRAGMENT_KEY, DbHelper.COLUMN_FRAGMENT_RAW, DbHelper.COLUMN_FRAGMENT_NESTED), null, null, null, null, null)
+        val cursor = db.query(DbHelper.FRAGMENT_TABLE_NAME, arrayOf(DbHelper.COLUMN_FRAGMENT_NAME, DbHelper.COLUMN_FRAGMENT_URL, DbHelper.COLUMN_FRAGMENT_KEY, DbHelper.COLUMN_FRAGMENT_RAW, DbHelper.COLUMN_FRAGMENT_NESTED, DbHelper.COLUMN_FRAGMENT_QUERY), null, null, null, null, null)
         val fragments = mutableListOf<FragmentDataObject>()
 
         if(cursor != null && cursor.moveToFirst()) {
@@ -108,6 +119,7 @@ class DbManager(context: Context) {
                 fragment.key = cursor.getInt(cursor.run {getColumnIndex(DbHelper.COLUMN_FRAGMENT_KEY)}) > 0
                 fragment.raw = cursor.getInt(cursor.run {getColumnIndex(DbHelper.COLUMN_FRAGMENT_RAW)}) > 0
                 fragment.nested = cursor.getString(cursor.run {getColumnIndex(DbHelper.COLUMN_FRAGMENT_NESTED)})
+                fragment.queries = cursor.getString(cursor.run {getColumnIndex(DbHelper.COLUMN_FRAGMENT_QUERY)})
                 fragments.add(fragment)
             } while(cursor.moveToNext())
         }

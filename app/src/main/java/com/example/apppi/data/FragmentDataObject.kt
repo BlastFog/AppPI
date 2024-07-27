@@ -5,5 +5,6 @@ class FragmentDataObject(
     var url: String = "",
     var key: Boolean = false,
     var raw: Boolean = false,
-    var nested: String = ""
+    var nested: String = "",
+    var queries: String = ""
 )

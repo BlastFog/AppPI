@@ -33,6 +33,7 @@ class CustomPresetFragment() : Fragment() {
     private var raw : Boolean = false
     private var key : Boolean = false
     private lateinit var nested : String
+    private lateinit var queries : String
     lateinit var resultField : EditText
     lateinit var deleteBut : ImageButton
 
@@ -45,10 +46,12 @@ class CustomPresetFragment() : Fragment() {
             raw = it.getBoolean(ARG_PARAM3)
             key = it.getBoolean(ARG_PARAM4)
             nested = it.getString(ARG_PARAM5).toString()
+            queries = it.getString(ARG_PARAM6).toString()
         }
 
-
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,12 +66,35 @@ class CustomPresetFragment() : Fragment() {
         urlField.text = url
 
         var dropDown = view.findViewById<Spinner>(R.id.spinner)
-        if(key) {
-            1
-            // TODO: Key Implementation
-        }else
+        if(!key)
             dropDown.visibility = View.INVISIBLE
 
+
+
+        Log.v("ASDSADASDASDASDASDASD","QWewies: $queries")
+
+        if(queries.isNotEmpty()) {
+            val map = queries.split(", ").associate {
+                val (left, right) = it.split("=")
+                left to right
+            }
+            Log.v("ASDSADASDASDASDASDASD","$map")
+
+            var keys = mutableListOf<String>()
+            var vals = mutableListOf<String>()
+            
+            map.forEach{entry ->
+                keys.add(entry.key)
+                vals.add(entry.value)
+            }
+
+            val keyIds = listOf(R.id.customKey1, R.id.customKey2,R.id.customKey3,R.id.customKey4,R.id.customKey5)
+            val valIds = listOf(R.id.customValue1,R.id.customValue2,R.id.customValue3,R.id.customValue4,R.id.customValue5)
+
+            for(i in 0..(keys.size-1)){
+                setKeyValuePair(keyIds[i], valIds[i], view, keys[i],vals[i])
+            }
+        }
 
         val fetchBut = view.findViewById<Button>(R.id.customFetchBut)
 
@@ -95,10 +121,20 @@ class CustomPresetFragment() : Fragment() {
             checkKeyValuePair(R.id.customKey3, R.id.customValue3, view, queries)
             checkKeyValuePair(R.id.customKey4, R.id.customValue4, view, queries)
             checkKeyValuePair(R.id.customKey5, R.id.customValue5, view, queries)
-            if(key){
-                // TODO: get Key from dropdown and keyStorage
-                //queries.put("key","AIzaSyAh0fi44IOxcp9VADCYmiJXwar1GdZJgg4")
 
+            var queriesString = queries.toString()
+            queriesString = queriesString.substring(1,queriesString.length-1)
+
+            val fragment = FragmentDataObject(
+                name = fragName,
+                url = url,
+                raw = raw,
+                key = key,
+                nested = nested
+            )
+            DbManager.getInstance(requireContext()).addQueryToFragment(fragment, queriesString)
+
+            if(key){
                 queries.put("key", DbManager.getInstance(requireContext()).getApiKey(dropDown.selectedItem.toString()))
             }
 
@@ -147,7 +183,12 @@ class CustomPresetFragment() : Fragment() {
     }
 
 
-
+    fun setKeyValuePair(cKey : Int, cValue : Int, view : View, key : String, value : String){
+        val keyField = view.findViewById<EditText>(cKey)
+        val valueField = view.findViewById<EditText>(cValue)
+        keyField.setText(key)
+        valueField.setText(value)
+    }
 
     fun checkKeyValuePair(cKey : Int, cValue : Int, view : View, queries : MutableMap<String, String>){
         val keyField = view.findViewById<EditText>(cKey)
@@ -163,6 +204,7 @@ class CustomPresetFragment() : Fragment() {
         private const val ARG_PARAM3 = "raw"
         private const val ARG_PARAM4 = "key"
         private const val ARG_PARAM5 = "nested"
+        private const val ARG_PARAM6 = "queries"
 
         fun newInstance(fragmentData: FragmentDataObject) : CustomPresetFragment{
             val fragment = CustomPresetFragment()
@@ -172,6 +214,7 @@ class CustomPresetFragment() : Fragment() {
             args.putBoolean(ARG_PARAM3, fragmentData.raw)
             args.putBoolean(ARG_PARAM4, fragmentData.key)
             args.putString(ARG_PARAM5, fragmentData.nested)
+            args.putString(ARG_PARAM6, fragmentData.queries)
             fragment.arguments = args
 
             return fragment

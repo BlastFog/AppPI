@@ -75,7 +75,8 @@ class PresetCreatorFragment : Fragment() {
                 url = urlField.text.toString(),
                 raw = rawField.isChecked,
                 key = keyField.isChecked,
-                nested = nestedField.text.toString()
+                nested = nestedField.text.toString(),
+                queries = ""
                 )
 
             DbManager.getInstance(requireContext()).addFragment(fragment)
