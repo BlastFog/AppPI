@@ -1,8 +1,6 @@
 package com.example.apppi.ui.main
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -15,8 +13,11 @@ import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AlertDialog
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.example.apppi.R
 import com.example.apppi.data.DbManager
@@ -25,6 +26,8 @@ class KeyStorage : Fragment() {
 
     private lateinit var tableLayout: TableLayout
     private val passwordFields = mutableListOf<EditText>()
+    private lateinit var biometricPrompt: BiometricPrompt
+    private var isAuthenticated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,7 @@ class KeyStorage : Fragment() {
 
         tableLayout = view.findViewById(R.id.apiKeyTableLayout)
 
-        for(storedKey in storedKeys){
+        for (storedKey in storedKeys) {
             addTableRow(storedKey.key, storedKey.value)
         }
 
@@ -68,26 +71,86 @@ class KeyStorage : Fragment() {
             alertDialog.show()
         }
 
-        view.findViewById<ToggleButton>(R.id.toggleButton).setOnCheckedChangeListener { _, isChecked ->
-            Log.d("KeyStorage", "Toggle button clicked: $isChecked")
-            for(passwordField in passwordFields) {
-                if (isChecked) {
-                    passwordField.transformationMethod =
-                        HideReturnsTransformationMethod.getInstance()
-                } else {
-                    passwordField.transformationMethod =
-                        PasswordTransformationMethod.getInstance()
 
+        biometricPrompt = BiometricPrompt(
+            this,
+            ContextCompat.getMainExecutor(requireContext()),
+            object: BiometricPrompt.AuthenticationCallback() {
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Something went wrong: $errString",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.d("FINGERPRINT", "Something went wrong: $errString")
                 }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    Log.d("FINGERPRINT", "Authentication succeeded")
+                    showKeys()
+                }
+
+                override fun onAuthenticationFailed() {
+                    Toast.makeText(
+                        requireContext(),
+                        "Something went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric Authentication")
+            .setSubtitle("Provide your fingerprint to access your API Keys")
+            .setNegativeButtonText("Use alternative authentication method")
+            .build()
+
+        view.findViewById<ToggleButton>(R.id.toggleButton).setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                if(isAuthenticated)
+                    showKeys()
+                else {
+                    biometricPrompt.authenticate(promptInfo)
+                    isAuthenticated = true
+                }
+            } else {
+                hideKeys()
             }
         }
-
         return view
     }
 
-    fun addTableRow(apiName: String, apiKey: String){
+    fun hideKeys() {
+        Log.d("Fingerprint", "Hiding keys")
+        for (passwordField in passwordFields) {
+            passwordField.apply {
+                isFocusableInTouchMode = false
+                isCursorVisible = false
+                focusable = View.NOT_FOCUSABLE
+                transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+    }
+
+    fun showKeys() {
+        Log.d("Fingerprint", "Showing keys")
+        for (passwordField in passwordFields) {
+            passwordField.apply {
+                isFocusableInTouchMode = true
+                focusable = View.FOCUSABLE
+                isCursorVisible = true
+                transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }
+        }
+    }
+
+    fun addTableRow(apiName: String, apiKey: String) {
         val tableRow = TableRow(context).apply {
-            layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+            layoutParams = TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+            )
         }
 
         val apiNameTextView = TextView(context).apply {
@@ -97,6 +160,8 @@ class KeyStorage : Fragment() {
 
         val apiKeyTextView = EditText(context).apply {
             setText(apiKey)
+            focusable = View.NOT_FOCUSABLE
+            isCursorVisible = false
             inputType = android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
             layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.6f)
             transformationMethod = PasswordTransformationMethod.getInstance()
