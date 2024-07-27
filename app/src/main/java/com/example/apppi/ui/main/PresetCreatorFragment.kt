@@ -19,6 +19,7 @@ import com.example.apppi.R
 class PresetCreatorFragment : Fragment() {
 
     private lateinit var createBut: Button
+    private lateinit var backBut: Button
 
     private lateinit var nameField: EditText
     private lateinit var urlField: EditText
@@ -57,6 +58,7 @@ class PresetCreatorFragment : Fragment() {
         })
 
         createBut = view.findViewById(R.id.presetCreateBut)
+        backBut = view.findViewById(R.id.presetBackBut)
         createBut.setOnClickListener{
             nameField = view.findViewById(R.id.presetNameField)
             urlField = view.findViewById(R.id.presetUrlField)
@@ -68,6 +70,12 @@ class PresetCreatorFragment : Fragment() {
 
             (activity as MainActivity).navigateBackAndAddFragment(CustomPresetFragment.newInstance(nameField.text.toString(),urlField.text.toString(),rawField.isChecked,keyField.isChecked,nestedField.text.toString()))
         }
+
+        backBut.setOnClickListener{
+            (activity as MainActivity).navigateBack()
+        }
+
+
 
         return view
     }
