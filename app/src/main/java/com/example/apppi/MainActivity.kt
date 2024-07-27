@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -94,9 +95,11 @@ class MainActivity : AppCompatActivity() {
         navigateBack()
     }
 
-    fun removeThisFragment(frag : Fragment){
+    fun removeThisFragment(frag : Fragment, name : String){
         viewPagerAdapter.removeFragment(frag)
         viewPager.adapter = viewPagerAdapter
+
+        Toast.makeText(this, "Removed ${name} Page", Toast.LENGTH_SHORT).show()
     }
 
     fun openFragmentBuilder(view : View){

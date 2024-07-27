@@ -57,15 +57,17 @@
             android:layout_margin="10dp">
 
             <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
                 android:layout_marginTop="20dp">
 
                 <Spinner
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="right"/>
             </TableRow>
 
             <TableRow
@@ -75,14 +77,22 @@
 
                 <TextView
                     android:id="@+id/customUrlLabel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="57dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0"
                     android:text="URL:" />
+            </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="20dp">
                 <TextView
                     android:id="@+id/url"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
             </TableRow>
 
             <TableRow

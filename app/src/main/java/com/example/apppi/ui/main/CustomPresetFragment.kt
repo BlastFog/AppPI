@@ -1,5 +1,6 @@
 package com.example.apppi.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,7 +13,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -139,11 +140,13 @@ class CustomPresetFragment() : Fragment() {
             )
             DbManager.getInstance(requireContext()).removeFragment(fragment)
 
-            (activity as MainActivity).removeThisFragment(this)
+            (activity as MainActivity).removeThisFragment(this, fragName)
         }
 
         return view
     }
+
+
 
 
     fun checkKeyValuePair(cKey : Int, cValue : Int, view : View, queries : MutableMap<String, String>){
