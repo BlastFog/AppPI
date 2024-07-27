@@ -78,7 +78,7 @@ class PresetCreatorFragment : Fragment() {
                     raw = rawField.isChecked,
                     key = keyField.isChecked,
                     nested = nestedField.text.toString(),
-                    queries = " "
+                    queries = ""
                 )
 
                 DbManager.getInstance(requireContext()).addFragment(fragment)
