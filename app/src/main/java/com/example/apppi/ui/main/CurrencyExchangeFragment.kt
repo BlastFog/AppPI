@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.apppi.R
 
-class Fragment4 : Fragment() {
+class CurrencyExchangeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,10 +19,10 @@ class Fragment4 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_4, container, false)
+        return inflater.inflate(R.layout.fragment_currency_exchange, container, false)
     }
 
     companion object {
-        fun newInstance() = Fragment4()
+        fun newInstance() = CurrencyExchangeFragment()
     }
 }
