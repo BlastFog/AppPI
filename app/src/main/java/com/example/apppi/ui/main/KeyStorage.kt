@@ -24,6 +24,7 @@ import com.example.apppi.data.DbManager
 
 class KeyStorage : Fragment() {
 
+    private val ALTERNATIVE_METHOD = "Use alternative authentication method"
     private lateinit var tableLayout: TableLayout
     private val passwordFields = mutableListOf<EditText>()
     private lateinit var biometricPrompt: BiometricPrompt
@@ -78,12 +79,19 @@ class KeyStorage : Fragment() {
             object: BiometricPrompt.AuthenticationCallback() {
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Something went wrong: $errString",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+                    if(errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON){
+                        AlertDialog.Builder(requireContext())
+                            .setTitle("Alternative method :)")
+                            .setPositiveButton("Show anyway") { _, _ ->
+                                showKeys()
+                            }
+                            .create()
+                            .show()
+                    }
+
                     Log.d("FINGERPRINT", "Something went wrong: $errString")
+                    Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -103,7 +111,7 @@ class KeyStorage : Fragment() {
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("Biometric Authentication")
             .setSubtitle("Provide your fingerprint to access your API Keys")
-            .setNegativeButtonText("Use alternative authentication method")
+            .setNegativeButtonText(ALTERNATIVE_METHOD)
             .build()
 
         view.findViewById<ToggleButton>(R.id.toggleButton).setOnCheckedChangeListener { _, isChecked ->
