@@ -110,58 +110,75 @@ class CustomPresetFragment() : Fragment() {
 
 
         fetchBut.setOnClickListener{
-            //Log.v("asdasdasdasdas", dropDown.selectedItem.toString())
-            val myBuilder = CronetEngine.Builder(context)
-            val cronetEngine: CronetEngine = myBuilder.build()
+            if(key && dropDown.selectedItem != null) {
+                //Log.v("asdasdasdasdas", dropDown.selectedItem.toString())
+                val myBuilder = CronetEngine.Builder(context)
+                val cronetEngine: CronetEngine = myBuilder.build()
 
-            val queries : MutableMap<String, String> = mutableMapOf()
+                val queries: MutableMap<String, String> = mutableMapOf()
 
-            checkKeyValuePair(R.id.customKey1, R.id.customValue1, view, queries)
-            checkKeyValuePair(R.id.customKey2, R.id.customValue2, view, queries)
-            checkKeyValuePair(R.id.customKey3, R.id.customValue3, view, queries)
-            checkKeyValuePair(R.id.customKey4, R.id.customValue4, view, queries)
-            checkKeyValuePair(R.id.customKey5, R.id.customValue5, view, queries)
+                checkKeyValuePair(R.id.customKey1, R.id.customValue1, view, queries)
+                checkKeyValuePair(R.id.customKey2, R.id.customValue2, view, queries)
+                checkKeyValuePair(R.id.customKey3, R.id.customValue3, view, queries)
+                checkKeyValuePair(R.id.customKey4, R.id.customValue4, view, queries)
+                checkKeyValuePair(R.id.customKey5, R.id.customValue5, view, queries)
 
-            var queriesString = queries.toString()
-            queriesString = queriesString.substring(1,queriesString.length-1)
+                var queriesString = queries.toString()
+                queriesString = queriesString.substring(1, queriesString.length - 1)
 
-            val fragment = FragmentDataObject(
-                name = fragName,
-                url = url,
-                raw = raw,
-                key = key,
-                nested = nested
-            )
-            DbManager.getInstance(requireContext()).addQueryToFragment(fragment, queriesString)
+                val fragment = FragmentDataObject(
+                    name = fragName,
+                    url = url,
+                    raw = raw,
+                    key = key,
+                    nested = nested
+                )
+                DbManager.getInstance(requireContext()).addQueryToFragment(fragment, queriesString)
 
-            if(key){
-                queries.put("key", DbManager.getInstance(requireContext()).getApiKey(dropDown.selectedItem.toString()))
+                if (key) {
+                    queries.put(
+                        "key",
+                        DbManager.getInstance(requireContext())
+                            .getApiKey(dropDown.selectedItem.toString())
+                    )
+                }
+
+                val queriesUnmutable: Map<String, String> = queries
+                Log.v("debugFields", queriesUnmutable.toString())
+
+
+                //Example URL:  https://www.googleapis.com/youtube/v3/search
+                //     params: part=snippet, q=@MrBeast, type=channel
+                var myViewModel = ViewModelProvider(this).get(CustomPresetViewModel::class.java)
+                resultField = view.findViewById(R.id.customResult)
+
+
+                if (raw) {
+                    Log.v("asdasdasdasdasdasd", "RAWWWWW")
+                    CronetRequestBuilder.newInstance()
+                        .buildRequest(cronetEngine, url, queries, "customRawCall", this)
+                    myViewModel.jsonObject.observe(context as LifecycleOwner, Observer { jsonObj ->
+                        resultField.setText(jsonObj)
+                    })
+                } else if (nested.isNotEmpty()) {
+                    Log.v("asdasdasdasdasdasd", "NOT RAWWWWW")
+                    CronetRequestBuilder.newInstance().buildRequest(
+                        cronetEngine,
+                        url,
+                        queries,
+                        "customNestedCall:".plus(nested),
+                        this
+                    )
+                    myViewModel.jsonAttribute.observe(
+                        context as LifecycleOwner,
+                        Observer { jsonAtt ->
+                            resultField.setText(jsonAtt)
+                        })
+                }
+            }else{
+                (activity as MainActivity).noKeyToast()
             }
 
-            val queriesUnmutable : Map<String, String> = queries
-            Log.v("debugFields", queriesUnmutable.toString())
-
-
-            //Example URL:  https://www.googleapis.com/youtube/v3/search
-            //     params: part=snippet, q=@MrBeast, type=channel
-            var myViewModel = ViewModelProvider(this).get(CustomPresetViewModel::class.java)
-            resultField = view.findViewById(R.id.customResult)
-
-
-            if(raw) {
-                Log.v("asdasdasdasdasdasd","RAWWWWW")
-                CronetRequestBuilder.newInstance().buildRequest(cronetEngine, url, queries, "customRawCall", this)
-                myViewModel.jsonObject.observe(context as LifecycleOwner, Observer {
-                        jsonObj -> resultField.setText(jsonObj)
-                })
-            }
-            else if(nested.isNotEmpty()){
-                Log.v("asdasdasdasdasdasd","NOT RAWWWWW")
-                CronetRequestBuilder.newInstance().buildRequest(cronetEngine,url,queries,"customNestedCall:".plus(nested),this)
-                myViewModel.jsonAttribute.observe(context as LifecycleOwner, Observer {
-                        jsonAtt -> resultField.setText(jsonAtt)
-                })
-            }
         }
 
         deleteBut = view.findViewById(R.id.customDeleteBut)

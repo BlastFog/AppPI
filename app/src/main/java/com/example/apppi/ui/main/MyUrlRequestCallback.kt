@@ -1,5 +1,7 @@
 package com.example.apppi.ui.main
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -31,12 +33,8 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
         Log.i(TAG, "Header data: $info")            // status code etc.
 
         if(info?.httpStatusCode!! >= 300){
-            // TODO: FrontEnd Toast for error
-
-            Log.v("aaaaaaaaaaaaaaaaaaaa", "ERRORRRRRRR")
-
-            fragmentReference.activity?.let {
-                Toast.makeText(it, "Error: ${info.httpStatusCode}", Toast.LENGTH_SHORT).show()
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(fragmentReference.activity, "Error: ${info.httpStatusCode}", Toast.LENGTH_LONG).show()
             }
         }else {
             byteBuffer?.let {
