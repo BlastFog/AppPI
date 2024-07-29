@@ -1,6 +1,9 @@
 package com.example.apppi.ui.main
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import org.chromium.net.CronetException
@@ -30,7 +33,10 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
         Log.i(TAG, "Header data: $info")            // status code etc.
 
         if(info?.httpStatusCode!! >= 300){
-            // TODO: FrontEnd Toast for error
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(fragmentReference.activity, "Error: ${info.httpStatusCode}", Toast.LENGTH_LONG).show()
+                Log.v("aaaaaaaaaaaaaaaaaaaa", "$info")
+            }
         }else {
             byteBuffer?.let {
                 it.flip()
@@ -44,6 +50,9 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
     override fun onSucceeded(request: UrlRequest?, info: UrlResponseInfo?) {
         Log.i(TAG, "onSucceeded method called.")
+
+        Log.v("aaaaaaaaaaaaaaaaaaaa", "CALL MEEEEEEEEEEEE + ${request}")
+
         parseJsonResponse(responseBody.toString())
     }
 
@@ -54,27 +63,31 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
     private fun parseJsonResponse(response: String) {
         try {
             val jsonObject = JSONObject(response)
-            //val data = jsonObject.getString("name")
             Log.i(TAG, "Extracted jsonObject: $jsonObject")
-            //Log.i(TAG, "Extracted data: $data")
-
+            
             when(apiName){
                 "YT_id" -> {
                     try {
                         var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
-
                         val channelID = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("id") as JSONObject).get("channelId")
-
                         viewModel.setID("$channelID")
-
-                    }catch (e : Exception) {
-                        Log.e(TAG, "$e.message")
+                    }catch (e : Exception){
+                        Log.e(TAG,"$e.message")
                     }
                 }
                 "YT_stats" -> {
                     var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
                     val channelSubs = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("subscriberCount") as String
-                    viewModel.setSubs(channelSubs.toInt())
+                    val channelViews = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("viewCount") as String
+                    val channelVideos = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("videoCount") as String
+
+                    val attList = listOf(channelSubs, channelViews, channelVideos)
+                    viewModel.setAttributes(attList)
+
+                    //viewModel.setSubs(channelSubs.toInt())
+                    //viewModel.setViews(channelViews.toInt())
+                    //viewModel.setVideos(channelVideos.toInt())
+                    //viewModel.setAttributes(channelSubs.toInt(), channelViews.toInt(), channelVideos.toInt())
                 }
                 CurrencyExchangeFragment.API_NAME -> {
                     Log.d(TAG, "Currency Exchange API Response: $jsonObject")
@@ -104,7 +117,6 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
 
     fun extractJsonAttribute(jsonObject: JSONObject, att : String) : Any?{
-        Log.v("asdasdasdasdasdasd","OBJ: $jsonObject")
         val c = when(jsonObject){
             is JSONObject -> jsonObject.get(att)
             is JSONArray -> jsonObject.length()/*jsonObject.get(att.toInt())*//*extractJsonAttribute(jsonObject.getJSONArray(), att)*///{
@@ -113,7 +125,6 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
             //}
             else -> throw Exception("Not Found")
         }
-        Log.v("asdasdasdasdasdasd","attribute: $c")
         return c
     }
 }
