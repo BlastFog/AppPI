@@ -6,7 +6,7 @@
   - Johannes Planegger
 
 ## Topics
-  - Sensor: Fingerabdruck zum Abrufen gespeicherter API keys
+  - Sensor: Fingerabdruck/Gesichtsscan zum Abrufen gespeicherter API keys
   - Data centricity: Server mit Daten
   - Special gestures: Swipe für Preset-swap
 
@@ -22,7 +22,7 @@ https://free-apis.github.io/#/browse
   - Es ist möglich erstellte Fragmente mit dem "x" button (rechts oben) zu löschen und aus der DB zu entfernen.
 
 ## Funktionsweise - API Calls:
-  - Die erstellten API Interfaces ermöglichen die Übergabe von queries bestehend aus (key, value) tupel.
+  - Die erstellten API Interfaces ermöglichen die Übergabe von Parameter bestehend aus (key, value) tupel.
   - Das explizite Setzen der Header ist nicht möglich (könnte in der Zukunft ausgebaut werden).
   - Es ist möglich den return der API calls auf ein gewisses Attribut zu beschränken (im Builder).
   - Die erstellten API Interface Presets und die API Keys werden in einer SQLite DB gespeichert und bleiben somit nach App Neustart erhalten.
