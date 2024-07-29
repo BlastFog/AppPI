@@ -23,39 +23,39 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="50dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingHorizontal="50dp">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:gravity="center">
 
                 <ImageButton
                     android:id="@+id/ytLinkBut"
-                    android:background="@null"
-                    android:src="@drawable/youtube_logo_small"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:scaleType="fitCenter"/>
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/youtube_logo_small" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="50dp">
+                android:layout_marginTop="50dp"
+                android:gravity="center">
 
                 <EditText
                     android:id="@+id/ytChannelNameTextField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:hint="Channel Name"
                     android:layout_weight="1"
-                    android:gravity="center"/>
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Channel Name"
+                    android:inputType="text" />
             </TableRow>
 
             <TableRow
@@ -80,12 +80,11 @@
                     android:id="@+id/ytSubField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="numberDecimal"
-                    android:focusableInTouchMode="false"
                     android:cursorVisible="false"
+                    android:ems="10"
+                    android:focusableInTouchMode="false"
                     android:gravity="center"
-                    />
+                    android:inputType="numberDecimal" />
             </TableRow>
 
 
@@ -111,14 +110,12 @@
                     android:id="@+id/ytViewCountField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:focusableInTouchMode="false"
                     android:cursorVisible="false"
+                    android:ems="10"
+                    android:focusableInTouchMode="false"
                     android:gravity="center"
-                    />
+                    android:inputType="text" />
             </TableRow>
-
 
 
             <TableRow
@@ -143,12 +140,11 @@
                     android:id="@+id/ytVideoCountField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:focusableInTouchMode="false"
                     android:cursorVisible="false"
+                    android:ems="10"
+                    android:focusableInTouchMode="false"
                     android:gravity="center"
-                    />
+                    android:inputType="text" />
             </TableRow>
 
         </TableLayout>
