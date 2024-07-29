@@ -61,11 +61,12 @@
                 android:id="@+id/toggleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="52dp"
                 android:layout_marginBottom="128dp"
                 android:textOff="Show Keys"
                 android:textOn="Hide Keys"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/addRowButton"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
@@ -74,6 +75,7 @@
                 android:layout_height="60dp"
                 android:text="Add Row"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/toggleButton"
                 app:layout_constraintTop_toTopOf="@+id/toggleButton" />
 

@@ -2,7 +2,7 @@
     <string name="app_name">AppPI</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="app_description">AppPI: An App by Martin Jäger and Johannes Planegger \n \n Features: \n Save your API keys locally on your phone \n Make API calls with our easy to use presets \n Create custom Fragments taylored to your needs and call your own APIs</string>
+    <string name="app_description">by Martin Jäger and Johannes Planegger. \n \nFeatures: \nSave your API keys locally on your phone \nMake API calls with our easy to use presets \nCreate custom Fragments and call your own APIs\nUse biometric authentication to edit your saved keys</string>
     <string name="delete">Delete</string>
     <string name="fetch">Fetch</string>
 </resources>

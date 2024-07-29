@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/apppi_logo_alpha" />
+            android:src="@drawable/apppi_logo_alpha_new" />
 
         <Button
             android:id="@+id/startBut"
