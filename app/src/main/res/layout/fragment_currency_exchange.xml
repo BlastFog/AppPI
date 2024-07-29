@@ -26,14 +26,14 @@
 
 
             <EditText
-                android:id="@+id/editTextText"
+                android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="52dp"
                 android:ems="10"
                 android:hint="Amount"
-                android:inputType="text"
+                android:inputType="number"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,17 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:text="From"
-                app:layout_constraintStart_toStartOf="@+id/editTextText"
-                app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="160dp"
-                android:text="To"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView4" />
+                app:layout_constraintStart_toStartOf="@+id/amount"
+                app:layout_constraintTop_toBottomOf="@+id/amount" />
 
             <Spinner
                 android:id="@+id/fromSpinner"
@@ -62,30 +53,14 @@
                 app:layout_constraintStart_toStartOf="@+id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-            <Spinner
-                android:id="@+id/toSpinner"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                app:layout_constraintStart_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-            <TextView
-                android:id="@+id/selectedFrom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="44dp"
-                android:text=""
-                app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/fromSpinner" />
-
             <TextView
                 android:id="@+id/selectedTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
                 android:text=""
-                app:layout_constraintStart_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toTopOf="@+id/selectedFrom" />
+                app:layout_constraintStart_toStartOf="@+id/targetButton"
+                app:layout_constraintTop_toBottomOf="@+id/targetButton" />
 
             <TextView
                 android:id="@+id/resultTextView"
@@ -109,6 +84,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.95" />
+
+            <Button
+                android:id="@+id/targetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:text="Select Target Currencies"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fromSpinner"
+                app:layout_constraintTop_toTopOf="@+id/textView4" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

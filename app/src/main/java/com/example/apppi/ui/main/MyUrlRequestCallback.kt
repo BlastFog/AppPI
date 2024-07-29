@@ -58,37 +58,43 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
             Log.i(TAG, "Extracted jsonObject: $jsonObject")
             //Log.i(TAG, "Extracted data: $data")
 
-            if(apiName.isEmpty()){
-                // TODO: Default Action
-            }else if(apiName=="YT_id"){
-                try {
-                    var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
+            when(apiName){
+                "YT_id" -> {
+                    try {
+                        var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
 
-                    val channelID = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("id") as JSONObject).get("channelId")
+                        val channelID = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("id") as JSONObject).get("channelId")
 
-                    viewModel.setID("$channelID")
+                        viewModel.setID("$channelID")
 
-                }catch (e : Exception){
-                    Log.e(TAG,"$e.message")
+                    }catch (e : Exception) {
+                        Log.e(TAG, "$e.message")
+                    }
                 }
-            }else if(apiName == "YT_stats"){
-                var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
-                val channelSubs = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("subscriberCount") as String
-                viewModel.setSubs(channelSubs.toInt())
-
-            }else if(apiName == "RandEmoji"){
-                Log.i(TAG,"TESTTTTTTTTT, $fragmentReference")
-            }else if(apiName == "customRawCall"){
-                var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
-                viewModel.setJsonObject(jsonObject.toString())
-            }else if(apiName.startsWith("customNestedCall")){
-                var nestedAttribute = apiName.substringAfter(':')
-                var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
-                viewModel.setJsonAttribute(extractJsonAttribute(jsonObject, nestedAttribute).toString())
-
-
-            }else{
-                Log.v("asdasdasdasdasdasd","CAUGHT YA")
+                "YT_stats" -> {
+                    var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
+                    val channelSubs = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("subscriberCount") as String
+                    viewModel.setSubs(channelSubs.toInt())
+                }
+                CurrencyExchangeFragment.API_NAME -> {
+                    Log.d(TAG, "Currency Exchange API Response: $jsonObject")
+                    val viewModel: CurrencyViewModel = ViewModelProvider(fragmentReference).get(CurrencyViewModel::class.java)
+                    viewModel.setRates(jsonObject.toString())
+                }
+                "customRawCall" -> {
+                    var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
+                    viewModel.setJsonObject(jsonObject.toString())
+                }
+                else -> {
+                    if(apiName.startsWith("customNestedCall")){
+                        var nestedAttribute = apiName.substringAfter(':')
+                        var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
+                        viewModel.setJsonAttribute(extractJsonAttribute(jsonObject, nestedAttribute).toString())
+                    }
+                    else {
+                        Log.e(TAG, "API name not found")
+                    }
+                }
             }
 
         } catch (e: Exception) {
