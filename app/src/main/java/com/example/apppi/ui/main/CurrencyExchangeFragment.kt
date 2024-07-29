@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import android.app.AlertDialog
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -108,16 +109,15 @@ class CurrencyExchangeFragment : Fragment() {
                 "from" to (availableCurrencies[fromCurrency] ?: "EUR"),
                 "to" to targetCurrencies
             )
-
             CronetRequestBuilder.newInstance()
                 .buildRequest(cronetEngine, URL, params, API_NAME, this)
-
-            var myViewModel = ViewModelProvider(this).get(CurrencyViewModel::class.java)
-            val resultTextView = view.findViewById<TextView>(R.id.resultTextView)
-            myViewModel.rates.observe(context as LifecycleOwner, Observer { rates ->
-                resultTextView.text = rates.entries.joinToString("; ")
-            })
         }
+
+        var myViewModel = ViewModelProvider(this).get(CurrencyViewModel::class.java)
+        val resultTextView = view.findViewById<TextView>(R.id.resultTextView)
+        myViewModel.rates.observe(context as LifecycleOwner, Observer { rates ->
+            resultTextView.text = rates.entries.joinToString("; ")
+        })
 
         return view
     }
