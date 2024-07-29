@@ -27,4 +27,4 @@ https://free-apis.github.io/#/browse
   - Es ist möglich den return der API calls auf ein gewisses Attribut zu beschränken (im Builder).
   - Die erstellten API Interface Presets und die API Keys werden in einer SQLite DB gespeichert und bleiben somit nach App Neustart erhalten.
   - Es ist möglich API Interface Presets zu erstellen die keinen Key benötigen.
-  - Die Keys werden standardmäßig als query übergeben.
+  - Die Keys werden standardmäßig als Parameter übergeben.
