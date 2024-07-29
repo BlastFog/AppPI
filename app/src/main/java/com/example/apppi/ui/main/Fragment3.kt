@@ -89,20 +89,18 @@ class Fragment3 : Fragment() {
                     "type" to "channel",
                     "key" to "$key"
                 )
-
                 CronetRequestBuilder.newInstance()
                     .buildRequest(cronetEngine, BASEURL + "search", queries, "YT_id", this)
-
-
-                var myViewModel = ViewModelProvider(this).get(YTViewModel::class.java)
-
-                myViewModel.channelID.observe(context as LifecycleOwner, Observer { channelID ->
-                    foundID(channelID, cronetEngine)
-                })
             }else{
                 (activity as MainActivity).ytKeyEmptyToast()
             }
         }
+
+        var myViewModel = ViewModelProvider(this).get(YTViewModel::class.java)
+
+        myViewModel.channelID.observe(context as LifecycleOwner, Observer { channelID ->
+            foundID(channelID, cronetEngine)
+        })
 
         return view
     }
