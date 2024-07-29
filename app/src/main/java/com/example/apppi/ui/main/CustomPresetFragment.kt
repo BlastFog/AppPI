@@ -111,7 +111,7 @@ class CustomPresetFragment() : Fragment() {
 
 
         fetchBut.setOnClickListener{
-            if(key && dropDown.selectedItem != null) {
+            if((key && dropDown.selectedItem != null) || key == false) {
                 //Log.v("asdasdasdasdas", dropDown.selectedItem.toString())
                 val myBuilder = CronetEngine.Builder(context)
                 val cronetEngine: CronetEngine = myBuilder.build()
