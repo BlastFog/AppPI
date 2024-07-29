@@ -35,6 +35,7 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
         if(info?.httpStatusCode!! >= 300){
             Handler(Looper.getMainLooper()).post {
                 Toast.makeText(fragmentReference.activity, "Error: ${info.httpStatusCode}", Toast.LENGTH_LONG).show()
+                Log.v("aaaaaaaaaaaaaaaaaaaa", "$info")
             }
         }else {
             byteBuffer?.let {
@@ -49,6 +50,9 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
     override fun onSucceeded(request: UrlRequest?, info: UrlResponseInfo?) {
         Log.i(TAG, "onSucceeded method called.")
+
+        Log.v("aaaaaaaaaaaaaaaaaaaa", "CALL MEEEEEEEEEEEE + ${responseBody}")
+
         parseJsonResponse(responseBody.toString())
     }
 
@@ -59,20 +63,15 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
     private fun parseJsonResponse(response: String) {
         try {
             val jsonObject = JSONObject(response)
-            //val data = jsonObject.getString("name")
             Log.i(TAG, "Extracted jsonObject: $jsonObject")
-            //Log.i(TAG, "Extracted data: $data")
 
             if(apiName.isEmpty()){
                 // TODO: Default Action
             }else if(apiName=="YT_id"){
                 try {
                     var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
-
                     val channelID = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("id") as JSONObject).get("channelId")
-
                     viewModel.setID("$channelID")
-
                 }catch (e : Exception){
                     Log.e(TAG,"$e.message")
                 }
@@ -102,7 +101,7 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
 
             }else{
-                Log.v("asdasdasdasdasdasd","CAUGHT YA")
+                1
             }
 
         } catch (e: Exception) {
@@ -112,7 +111,6 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
 
     fun extractJsonAttribute(jsonObject: JSONObject, att : String) : Any?{
-        Log.v("asdasdasdasdasdasd","OBJ: $jsonObject")
         val c = when(jsonObject){
             is JSONObject -> jsonObject.get(att)
             is JSONArray -> jsonObject.length()/*jsonObject.get(att.toInt())*//*extractJsonAttribute(jsonObject.getJSONArray(), att)*///{
@@ -121,7 +119,6 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
             //}
             else -> throw Exception("Not Found")
         }
-        Log.v("asdasdasdasdasdasd","attribute: $c")
         return c
     }
 }

@@ -71,15 +71,15 @@ class Fragment3 : Fragment() {
         viewField = view.findViewById(R.id.ytViewCountField)
         videoField = view.findViewById(R.id.ytVideoCountField)
 
-
-
         ytFetchBut = view.findViewById(R.id.ytFetch)
-        ytFetchBut.setOnClickListener{
-            val myBuilder = CronetEngine.Builder(context)
-            val cronetEngine: CronetEngine = myBuilder.build()
-            val input : EditText = view.findViewById(R.id.ytChannelNameTextField)
-            val channelName : String = input.text.toString()
 
+
+        val myBuilder = CronetEngine.Builder(context)
+        val cronetEngine: CronetEngine = myBuilder.build()
+        val input : EditText = view.findViewById(R.id.ytChannelNameTextField)
+
+        ytFetchBut.setOnClickListener{
+            val channelName : String = input.text.toString()
             val key = DbManager.getInstance(requireContext()).getApiKey("yt")
 
             if(key.isNotEmpty()) {
@@ -89,8 +89,10 @@ class Fragment3 : Fragment() {
                     "type" to "channel",
                     "key" to "$key"
                 )
+
                 CronetRequestBuilder.newInstance()
                     .buildRequest(cronetEngine, BASEURL + "search", queries, "YT_id", this)
+
 
                 var myViewModel = ViewModelProvider(this).get(YTViewModel::class.java)
 
