@@ -1,6 +1,7 @@
 package com.example.apppi.ui.main
 
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import org.chromium.net.CronetException
@@ -31,6 +32,12 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
         if(info?.httpStatusCode!! >= 300){
             // TODO: FrontEnd Toast for error
+
+            Log.v("aaaaaaaaaaaaaaaaaaaa", "ERRORRRRRRR")
+
+            fragmentReference.activity?.let {
+                Toast.makeText(it, "Error: ${info.httpStatusCode}", Toast.LENGTH_SHORT).show()
+            }
         }else {
             byteBuffer?.let {
                 it.flip()
@@ -74,7 +81,16 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
             }else if(apiName == "YT_stats"){
                 var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
                 val channelSubs = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("subscriberCount") as String
-                viewModel.setSubs(channelSubs.toInt())
+                val channelViews = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("viewCount") as String
+                val channelVideos = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("videoCount") as String
+
+                val attList = listOf(channelSubs, channelViews, channelVideos)
+                viewModel.setAttributes(attList)
+
+                //viewModel.setSubs(channelSubs.toInt())
+                //viewModel.setViews(channelViews.toInt())
+                //viewModel.setVideos(channelVideos.toInt())
+                //viewModel.setAttributes(channelSubs.toInt(), channelViews.toInt(), channelVideos.toInt())
 
             }else if(apiName == "RandEmoji"){
                 Log.i(TAG,"TESTTTTTTTTT, $fragmentReference")

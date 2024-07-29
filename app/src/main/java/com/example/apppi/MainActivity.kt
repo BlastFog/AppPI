@@ -106,6 +106,10 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Please fill in the API name and URL", Toast.LENGTH_SHORT).show()
     }
 
+    fun ytKeyEmptyToast(){
+        Toast.makeText(this, "Please add a key with the name: \"yt\"", Toast.LENGTH_SHORT).show()
+    }
+
     fun openFragmentBuilder(view : View){
         Log.v("test123","OPEN")
         viewPager.visibility = View.INVISIBLE

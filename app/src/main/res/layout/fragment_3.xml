@@ -22,6 +22,158 @@
             />
 
 
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="50dp"
+            android:layout_weight="1">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <ImageButton
+                    android:id="@+id/ytLinkBut"
+                    android:background="@null"
+                    android:src="@drawable/youtube_logo_small"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:scaleType="fitCenter"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="50dp">
+
+                <EditText
+                    android:id="@+id/ytChannelNameTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:hint="channel name"
+                    android:layout_weight="1"
+                    android:gravity="center"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp">
+
+                <TextView
+                    android:id="@+id/ytSubLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Subscriber" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/ytSubField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:focusableInTouchMode="false"
+                    android:cursorVisible="false"
+                    android:gravity="center"
+                    />
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp">
+
+                <TextView
+                    android:id="@+id/ytViewCountLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Views" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/ytViewCountField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:focusableInTouchMode="false"
+                    android:cursorVisible="false"
+                    android:gravity="center"
+                    />
+            </TableRow>
+
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp">
+
+                <TextView
+                    android:id="@+id/ytVideoCountLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Videos" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/ytVideoCountField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:focusableInTouchMode="false"
+                    android:cursorVisible="false"
+                    android:gravity="center"
+                    />
+            </TableRow>
+
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/ytFetch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fetch" />
+        </LinearLayout>
+
+
+        <!--
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -67,14 +219,14 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name"
+                android:hint="..."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.266" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     </LinearLayout>
 

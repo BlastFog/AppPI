@@ -1,5 +1,6 @@
 package com.example.apppi
 
+import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.apppi.ui.main.MyUrlRequestCallback
