@@ -98,8 +98,6 @@
                     </TableRow>
                 </TableLayout>
             </TableRow>
-
-
         </TableLayout>
 
         <LinearLayout
@@ -110,6 +108,7 @@
             android:gravity="center"
             android:layout_gravity="bottom"
             android:layout_marginBottom="20dp">
+
 
             <Button
                 android:id="@+id/backButton"

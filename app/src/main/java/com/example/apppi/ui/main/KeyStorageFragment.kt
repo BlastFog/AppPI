@@ -24,7 +24,7 @@ import com.example.apppi.data.DbManager
 
 class KeyStorageFragment : Fragment() {
 
-    private val ALTERNATIVE_METHOD = "Use alternative authentication method"
+    private val ALTERNATIVE_METHOD = "Use alternative authentication"
     private lateinit var tableLayout: TableLayout
     private val passwordFields = mutableListOf<EditText>()
     private lateinit var biometricPrompt: BiometricPrompt

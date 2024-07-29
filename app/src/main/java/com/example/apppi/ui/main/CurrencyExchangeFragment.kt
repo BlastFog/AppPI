@@ -10,6 +10,9 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
+import android.widget.ImageButton
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -62,6 +65,11 @@ class CurrencyExchangeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_currency_exchange, container, false)
 
+        view.findViewById<ImageButton>(R.id.frankfurterButton).setOnClickListener {
+            val visitFrankfurter = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.frankfurter.app/"))
+            startActivity(visitFrankfurter)
+        }
+
         val fromCurrencySpinner = view.findViewById<Spinner>(R.id.fromSpinner)
         fromCurrencySpinner.adapter = ArrayAdapter(
             requireContext(),
@@ -71,6 +79,7 @@ class CurrencyExchangeFragment : Fragment() {
 
         val checkedCurrencies = BooleanArray(availableCurrencies.size)
         val targetCurrencyButton = view.findViewById<Button>(R.id.targetButton)
+        var selectedString = ""
         targetCurrencyButton.setOnClickListener {
             val selectedCurrencies = mutableListOf<String>()
 
@@ -87,21 +96,22 @@ class CurrencyExchangeFragment : Fragment() {
                             selectedCurrencies.add(availableCurrencies.getValue(availableCurrencies.keys.toList()[i]))
                         }
                     }
-                    view.findViewById<TextView>(R.id.selectedTo).text =
-                        selectedCurrencies.joinToString(",")
+                    selectedString = selectedCurrencies.joinToString(",")
                 }
                 .show()
         }
 
         view.findViewById<Button>(R.id.currencyFetch).setOnClickListener {
             val cronetEngine: CronetEngine = CronetEngine.Builder(requireContext()).build()
-            val amount = view.findViewById<TextView>(R.id.amount).text.toString()
+            var amount = view.findViewById<TextView>(R.id.amount).text.toString()
+            amount = if(amount.isEmpty()) "1" else amount
+
             val fromCurrency = view.findViewById<Spinner>(R.id.fromSpinner).selectedItem.toString()
-            val targetCurrencies = view.findViewById<TextView>(R.id.selectedTo).text.toString()
+
             val params: Map<String, String> = mapOf(
                 "amount" to amount,
                 "from" to (availableCurrencies[fromCurrency] ?: "EUR"),
-                "to" to targetCurrencies
+                "to" to selectedString
             )
             CronetRequestBuilder.newInstance()
                 .buildRequest(cronetEngine, URL, params, API_NAME, this)
@@ -110,7 +120,7 @@ class CurrencyExchangeFragment : Fragment() {
         var myViewModel = ViewModelProvider(this).get(CurrencyViewModel::class.java)
         val resultTextView = view.findViewById<TextView>(R.id.resultTextView)
         myViewModel.rates.observe(context as LifecycleOwner, Observer { rates ->
-            resultTextView.text = rates.entries.joinToString("; ")
+            resultTextView.setText(rates.entries.joinToString("\n"))
         })
 
         return view
