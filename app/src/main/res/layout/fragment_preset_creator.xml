@@ -20,7 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="592dp"
         android:gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:layout_weight=".9"
+        >
 
         <TableRow
             android:layout_width="match_parent"
@@ -141,7 +143,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight=".1">
         <Button
             android:id="@+id/presetBackBut"
             android:layout_width="wrap_content"

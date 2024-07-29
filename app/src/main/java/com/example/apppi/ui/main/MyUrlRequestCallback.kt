@@ -51,7 +51,7 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
     override fun onSucceeded(request: UrlRequest?, info: UrlResponseInfo?) {
         Log.i(TAG, "onSucceeded method called.")
 
-        Log.v("aaaaaaaaaaaaaaaaaaaa", "CALL MEEEEEEEEEEEE + ${responseBody}")
+        Log.v("aaaaaaaaaaaaaaaaaaaa", "CALL MEEEEEEEEEEEE + ${request}")
 
         parseJsonResponse(responseBody.toString())
     }
