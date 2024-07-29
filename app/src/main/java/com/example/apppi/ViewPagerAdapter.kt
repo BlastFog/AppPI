@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.apppi.ui.main.Fragment2
 import com.example.apppi.ui.main.Fragment3
-import com.example.apppi.ui.main.Fragment4
+import com.example.apppi.ui.main.CurrencyExchangeFragment
 import com.example.apppi.ui.main.KeyStorage
 
 class ViewPagerAdapter (activity: FragmentActivity) : FragmentStateAdapter(activity) {
@@ -14,7 +14,7 @@ class ViewPagerAdapter (activity: FragmentActivity) : FragmentStateAdapter(activ
         KeyStorage(),
         Fragment2(),
         Fragment3(),
-        Fragment4()
+        CurrencyExchangeFragment()
     )
 
     override fun getItemCount(): Int = fragments.size

@@ -53,4 +53,5 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.fragment:fragment-ktx:1.3.6")
     implementation("androidx.biometric:biometric-ktx:1.2.0-alpha03")
+    implementation("com.google.code.gson:gson:2.8.8")
 }
