@@ -96,8 +96,6 @@ class DbManager(context: Context) {
             fragment.url,
             if (fragment.key) "1" else "0",
             if (fragment.raw) "1" else "0",
-            //fragment.key,
-            //fragment.raw,
             fragment.nested
         )
 

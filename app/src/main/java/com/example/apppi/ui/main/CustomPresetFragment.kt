@@ -1,6 +1,5 @@
 package com.example.apppi.ui.main
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,7 +12,6 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,8 +22,6 @@ import com.example.apppi.R
 import com.example.apppi.data.DbManager
 import com.example.apppi.data.FragmentDataObject
 import org.chromium.net.CronetEngine
-import java.util.concurrent.Executors
-
 
 class CustomPresetFragment() : Fragment() {
 
@@ -71,15 +67,11 @@ class CustomPresetFragment() : Fragment() {
             dropDown.visibility = View.INVISIBLE
 
 
-
-        Log.v("ASDSADASDASDASDASDASD","QWewies: $queries")
-
         if(queries.isNotEmpty()) {
             val map = queries.split(", ").associate {
                 val (left, right) = it.split("=")
                 left to right
             }
-            Log.v("ASDSADASDASDASDASDASD","$map")
 
             var keys = mutableListOf<String>()
             var vals = mutableListOf<String>()
@@ -104,7 +96,6 @@ class CustomPresetFragment() : Fragment() {
         val list : MutableList<String> = ArrayList()
         for(el in DbManager.getInstance(requireContext()).getApis()) {
             list.add(el)
-            //list.add(DbManager.getInstance(requireContext()).getApiKey(el))
         }
 
         dropDown.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, list)
@@ -112,7 +103,6 @@ class CustomPresetFragment() : Fragment() {
 
         fetchBut.setOnClickListener{
             if((key && dropDown.selectedItem != null) || key == false) {
-                //Log.v("asdasdasdasdas", dropDown.selectedItem.toString())
                 val myBuilder = CronetEngine.Builder(context)
                 val cronetEngine: CronetEngine = myBuilder.build()
 
@@ -155,14 +145,12 @@ class CustomPresetFragment() : Fragment() {
 
 
                 if (raw) {
-                    Log.v("asdasdasdasdasdasd", "RAWWWWW")
                     CronetRequestBuilder.newInstance()
                         .buildRequest(cronetEngine, url, queries, "customRawCall", this)
                     myViewModel.jsonObject.observe(context as LifecycleOwner, Observer { jsonObj ->
                         resultField.setText(jsonObj)
                     })
                 } else if (nested.isNotEmpty()) {
-                    Log.v("asdasdasdasdasdasd", "NOT RAWWWWW")
                     CronetRequestBuilder.newInstance().buildRequest(
                         cronetEngine,
                         url,

@@ -1,19 +1,16 @@
 package com.example.apppi
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.apppi.data.DbManager
-import com.example.apppi.data.FragmentDataObject
 import com.example.apppi.ui.main.AboutFragment
 import com.example.apppi.ui.main.CustomPresetFragment
 import com.example.apppi.ui.main.MainFragment
@@ -115,7 +112,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openFragmentBuilder(view : View){
-        Log.v("test123","OPEN")
         viewPager.visibility = View.INVISIBLE
 
         supportFragmentManager.beginTransaction()

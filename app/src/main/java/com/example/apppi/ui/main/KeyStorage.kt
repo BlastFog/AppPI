@@ -30,16 +30,11 @@ class KeyStorage : Fragment() {
     private lateinit var biometricPrompt: BiometricPrompt
     private var isAuthenticated = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_key_storage, container, false)
 
         val storedKeys = DbManager.getInstance(requireContext()).getApiKeys()

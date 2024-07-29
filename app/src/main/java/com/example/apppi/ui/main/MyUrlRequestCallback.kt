@@ -35,7 +35,6 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
         if(info?.httpStatusCode!! >= 300){
             Handler(Looper.getMainLooper()).post {
                 Toast.makeText(fragmentReference.activity, "Error: ${info.httpStatusCode}", Toast.LENGTH_LONG).show()
-                Log.v("aaaaaaaaaaaaaaaaaaaa", "$info")
             }
         }else {
             byteBuffer?.let {
@@ -50,8 +49,6 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
     override fun onSucceeded(request: UrlRequest?, info: UrlResponseInfo?) {
         Log.i(TAG, "onSucceeded method called.")
-
-        Log.v("aaaaaaaaaaaaaaaaaaaa", "CALL MEEEEEEEEEEEE + ${request}")
 
         parseJsonResponse(responseBody.toString())
     }
@@ -84,10 +81,6 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
                     val attList = listOf(channelSubs, channelViews, channelVideos)
                     viewModel.setAttributes(attList)
 
-                    //viewModel.setSubs(channelSubs.toInt())
-                    //viewModel.setViews(channelViews.toInt())
-                    //viewModel.setVideos(channelVideos.toInt())
-                    //viewModel.setAttributes(channelSubs.toInt(), channelViews.toInt(), channelVideos.toInt())
                 }
                 CurrencyExchangeFragment.API_NAME -> {
                     Log.d(TAG, "Currency Exchange API Response: $jsonObject")
@@ -119,10 +112,7 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
     fun extractJsonAttribute(jsonObject: JSONObject, att : String) : Any?{
         val c = when(jsonObject){
             is JSONObject -> jsonObject.get(att)
-            is JSONArray -> jsonObject.length()/*jsonObject.get(att.toInt())*//*extractJsonAttribute(jsonObject.getJSONArray(), att)*///{
-                //for(i in 0 until jsonObject.length())
-                //    extractJsonAttribute(jsonObject.getJSONObject(i),att)
-            //}
+            is JSONArray -> jsonObject.length()
             else -> throw Exception("Not Found")
         }
         return c

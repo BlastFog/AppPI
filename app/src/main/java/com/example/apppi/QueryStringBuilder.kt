@@ -1,8 +1,5 @@
 package com.example.apppi
 
-import android.util.Log
-import com.example.apppi.ui.main.Fragment2
-
 class QueryStringBuilder {
 
     fun buildQueryString(apiURL: String, queries: Map<String, String>): String {

@@ -23,48 +23,14 @@ import java.util.concurrent.Executors
 
 
 class Fragment2 : Fragment() {
-
-
     private lateinit var toolbar: Toolbar
     private lateinit var textV: TextView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        Log.i("test123", "Start")
-
-        /*val myBuilder = CronetEngine.Builder(context)
-        val cronetEngine: CronetEngine = myBuilder.build()
-
-        val executor: Executor = Executors.newSingleThreadExecutor()
-
-        //val apiUrl = "https://api.example.com/data?api_key=YOUR_API_KEY&param1=value1&param2=value2"
-        val apiUrl = "https://emojihub.yurace.pro/api/random"
-
-
-
-        val requestBuilder = cronetEngine.newUrlRequestBuilder(
-            apiUrl,
-            MyUrlRequestCallback("RandEmoji",this),
-            executor
-        )
-
-        requestBuilder.addHeader("Content-Type","application/json")
-
-        Log.i("MyUrlRequestCallback","FIRST CALL")
-
-        val request: UrlRequest = requestBuilder.build()
-
-        request.start()*/
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
         val view = inflater.inflate(R.layout.fragment_2, container, false)
 
         toolbar = view.findViewById(R.id.toolbar2)

@@ -46,16 +46,11 @@ class Fragment3 : Fragment() {
 
     private lateinit var toolbar: Toolbar
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_3, container, false)
 
         toolbar = view.findViewById(R.id.toolbar3)
@@ -112,7 +107,6 @@ class Fragment3 : Fragment() {
         var myViewModel = ViewModelProvider(this).get(YTViewModel::class.java)
 
         myViewModel.attributes.observe(context as LifecycleOwner, Observer { att ->
-            //Log.v("aaaaaaaaaaaaaaaaaaaa", "$att")
             subField.text = formatNumberWithCommas(att[0])
             viewField.text = formatNumberWithCommas(att[1])
             videoField.text = formatNumberWithCommas(att[2])

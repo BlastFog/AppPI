@@ -29,10 +29,6 @@ class PresetCreatorFragment : Fragment() {
     private lateinit var keyField: CheckBox
     private lateinit var nestedField: EditText
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -88,16 +84,11 @@ class PresetCreatorFragment : Fragment() {
                         fragment
                     )
                 )
-
             }
         }
-
         backBut.setOnClickListener{
             (activity as MainActivity).navigateBack()
         }
-
-
-
         return view
     }
 
