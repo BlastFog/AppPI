@@ -16,3 +16,11 @@ https://free-apis.github.io/#/browse
 ## Arbeitsaufteilung:
   - GUI:
   - API Interaktion:
+
+## Funktionsweise - API Calls:
+  - Die erstellten API Interface Presets ermöglichen die Übergabe von queries bestehend aus (key, value) tupel.
+  - Das explizite Setzen der Header ist nicht möglich (könnte in der Zukunft ausgebaut werden).
+  - Es ist möglich den return der API calls auf ein gewisses Attribut zu beschränken (im Builder).
+  - Die erstellten API Interface Presets und die API Keys werden in einer SQLite DB gespeichert.
+  - Es ist möglich API Interface Presets zu erstellen die keinen Key benötigen.
+  - Der Keys werden standardmäßig als query übergeben.
