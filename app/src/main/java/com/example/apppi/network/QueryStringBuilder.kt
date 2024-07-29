@@ -1,4 +1,4 @@
-package com.example.apppi
+package com.example.apppi.network
 
 class QueryStringBuilder {
 

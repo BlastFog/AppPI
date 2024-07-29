@@ -1,8 +1,7 @@
-package com.example.apppi
+package com.example.apppi.network
 
 import android.util.Log
 import androidx.fragment.app.Fragment
-import com.example.apppi.ui.main.MyUrlRequestCallback
 import org.chromium.net.CronetEngine
 import org.chromium.net.UrlRequest
 import java.util.concurrent.Executor

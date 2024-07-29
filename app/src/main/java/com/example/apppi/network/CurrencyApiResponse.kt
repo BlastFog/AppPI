@@ -1,4 +1,4 @@
-package com.example.apppi.ui.main
+package com.example.apppi.network
 
 import com.google.gson.annotations.SerializedName
 data class CurrencyApiResponse(

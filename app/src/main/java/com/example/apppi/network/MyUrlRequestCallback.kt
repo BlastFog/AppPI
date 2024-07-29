@@ -1,4 +1,4 @@
-package com.example.apppi.ui.main
+package com.example.apppi.network
 
 import android.os.Handler
 import android.os.Looper
@@ -6,6 +6,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.apppi.ui.main.CurrencyExchangeFragment
+import com.example.apppi.viewModels.CurrencyViewModel
+import com.example.apppi.viewModels.CustomPresetViewModel
+import com.example.apppi.viewModels.YTViewModel
 import org.chromium.net.CronetException
 import org.chromium.net.UrlRequest
 import org.chromium.net.UrlResponseInfo
@@ -15,6 +19,7 @@ import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
 
 private const val TAG = "MyUrlRequestCallback"
+
 
 class MyUrlRequestCallback(private val apiName : String = "", private val fragmentReference : Fragment) : UrlRequest.Callback() {
     private val responseBody = StringBuilder()
@@ -34,7 +39,11 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
 
         if(info?.httpStatusCode!! >= 300){
             Handler(Looper.getMainLooper()).post {
-                Toast.makeText(fragmentReference.activity, "Error: ${info.httpStatusCode}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    fragmentReference.activity,
+                    "Error: ${info.httpStatusCode}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }else {
             byteBuffer?.let {
@@ -61,19 +70,21 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
         try {
             val jsonObject = JSONObject(response)
             Log.i(TAG, "Extracted jsonObject: $jsonObject")
-            
+
             when(apiName){
                 "YT_id" -> {
                     try {
-                        var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
+                        var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(
+                            YTViewModel::class.java)
                         val channelID = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("id") as JSONObject).get("channelId")
                         viewModel.setID("$channelID")
                     }catch (e : Exception){
-                        Log.e(TAG,"$e.message")
+                        Log.e(TAG, "$e.message")
                     }
                 }
                 "YT_stats" -> {
-                    var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(YTViewModel::class.java)
+                    var viewModel: YTViewModel = ViewModelProvider(fragmentReference).get(
+                        YTViewModel::class.java)
                     val channelSubs = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("subscriberCount") as String
                     val channelViews = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("viewCount") as String
                     val channelVideos = ((jsonObject.getJSONArray("items")[0] as JSONObject).get("statistics") as JSONObject).get("videoCount") as String
@@ -84,17 +95,20 @@ class MyUrlRequestCallback(private val apiName : String = "", private val fragme
                 }
                 CurrencyExchangeFragment.API_NAME -> {
                     Log.d(TAG, "Currency Exchange API Response: $jsonObject")
-                    val viewModel: CurrencyViewModel = ViewModelProvider(fragmentReference).get(CurrencyViewModel::class.java)
+                    val viewModel: CurrencyViewModel = ViewModelProvider(fragmentReference).get(
+                        CurrencyViewModel::class.java)
                     viewModel.setRates(jsonObject.toString())
                 }
                 "customRawCall" -> {
-                    var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
+                    var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(
+                        CustomPresetViewModel::class.java)
                     viewModel.setJsonObject(jsonObject.toString())
                 }
                 else -> {
                     if(apiName.startsWith("customNestedCall")){
                         var nestedAttribute = apiName.substringAfter(':')
-                        var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(CustomPresetViewModel::class.java)
+                        var viewModel: CustomPresetViewModel = ViewModelProvider(fragmentReference).get(
+                            CustomPresetViewModel::class.java)
                         viewModel.setJsonAttribute(extractJsonAttribute(jsonObject, nestedAttribute).toString())
                     }
                     else {

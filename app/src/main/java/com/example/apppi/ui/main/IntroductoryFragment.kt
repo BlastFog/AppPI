@@ -1,28 +1,17 @@
 package com.example.apppi.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
-import com.example.apppi.MainActivity
 import com.example.apppi.R
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.chromium.net.CronetEngine
-import org.chromium.net.UrlRequest
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 
-class Fragment2 : Fragment() {
+
+class IntroductoryFragment : Fragment() {
     private lateinit var toolbar: Toolbar
     private lateinit var textV: TextView
 
@@ -31,7 +20,7 @@ class Fragment2 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_2, container, false)
+        val view = inflater.inflate(R.layout.fragment_intro, container, false)
 
         toolbar = view.findViewById(R.id.toolbar2)
         toolbar.title = "Introductory Fragment"
@@ -46,6 +35,6 @@ class Fragment2 : Fragment() {
     }
 
     companion object {
-        fun newInstance() = Fragment2()
+        fun newInstance() = IntroductoryFragment()
     }
 }

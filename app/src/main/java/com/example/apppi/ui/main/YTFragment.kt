@@ -3,7 +3,6 @@ package com.example.apppi.ui.main
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,24 +14,18 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.apppi.CronetRequestBuilder
+import com.example.apppi.network.CronetRequestBuilder
 import com.example.apppi.MainActivity
-import com.example.apppi.QueryStringBuilder
 import com.example.apppi.R
 import com.example.apppi.data.DbManager
+import com.example.apppi.viewModels.YTViewModel
 import org.chromium.net.CronetEngine
-import org.chromium.net.UrlRequest
-import org.json.JSONObject
-import java.text.DecimalFormat
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 private const val TAG = "MyUrlRequestCallback"
 private const val BASEURL = "https://www.googleapis.com/youtube/v3/"
 
-class Fragment3 : Fragment() {
+class YTFragment : Fragment() {
 // Youtube API Interaction Fragment (Auth Token)
 // Order: 1.  GET https://www.googleapis.com/youtube/v3/search params: part=snippet, q=@..., type=channel, key=...
 // 2. GET https://www.googleapis.com/youtube/v3/channels params: part=statistics, id=oldQuery[items[statistics]].subcriberCount, key=...
@@ -51,7 +44,7 @@ class Fragment3 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_3, container, false)
+        val view = inflater.inflate(R.layout.fragment_yt, container, false)
 
         toolbar = view.findViewById(R.id.toolbar3)
         toolbar.title = "Youtube API"
@@ -121,7 +114,7 @@ class Fragment3 : Fragment() {
     }
 
     companion object {
-        fun newInstance() = Fragment3()
+        fun newInstance() = YTFragment()
     }
 
 }

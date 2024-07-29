@@ -22,7 +22,7 @@ import androidx.core.widget.addTextChangedListener
 import com.example.apppi.R
 import com.example.apppi.data.DbManager
 
-class KeyStorage : Fragment() {
+class KeyStorageFragment : Fragment() {
 
     private val ALTERNATIVE_METHOD = "Use alternative authentication method"
     private lateinit var tableLayout: TableLayout
@@ -183,6 +183,6 @@ class KeyStorage : Fragment() {
     }
 
     companion object {
-        fun newInstance() = KeyStorage
+        fun newInstance() = KeyStorageFragment
     }
 }

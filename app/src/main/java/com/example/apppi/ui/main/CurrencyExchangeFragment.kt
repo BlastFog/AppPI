@@ -10,12 +10,12 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import android.app.AlertDialog
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.apppi.CronetRequestBuilder
+import com.example.apppi.network.CronetRequestBuilder
 import com.example.apppi.R
+import com.example.apppi.viewModels.CurrencyViewModel
 import org.chromium.net.CronetEngine
 
 class CurrencyExchangeFragment : Fragment() {

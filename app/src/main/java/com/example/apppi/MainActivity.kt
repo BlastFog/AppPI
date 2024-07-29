@@ -1,7 +1,6 @@
 package com.example.apppi
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +14,7 @@ import com.example.apppi.ui.main.AboutFragment
 import com.example.apppi.ui.main.CustomPresetFragment
 import com.example.apppi.ui.main.MainFragment
 import com.example.apppi.ui.main.PresetCreatorFragment
+import com.example.apppi.ui.main.ViewPagerAdapter
 import com.google.android.gms.net.CronetProviderInstaller
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

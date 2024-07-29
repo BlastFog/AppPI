@@ -1,8 +1,9 @@
-package com.example.apppi.ui.main
+package com.example.apppi.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.apppi.network.CurrencyApiResponse
 import com.google.gson.Gson
 
 class CurrencyViewModel : ViewModel() {

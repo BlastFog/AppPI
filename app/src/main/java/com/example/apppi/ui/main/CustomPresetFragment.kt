@@ -15,12 +15,13 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.apppi.CronetRequestBuilder
+import com.example.apppi.network.CronetRequestBuilder
 import com.example.apppi.MainActivity
 
 import com.example.apppi.R
 import com.example.apppi.data.DbManager
 import com.example.apppi.data.FragmentDataObject
+import com.example.apppi.viewModels.CustomPresetViewModel
 import org.chromium.net.CronetEngine
 
 class CustomPresetFragment() : Fragment() {
